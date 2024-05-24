@@ -8,6 +8,9 @@ class Wrap {
     int xFrom = 0;
     int yFrom = 0;
 
+    int xFinal = 0;
+    int yFinal = 0;
+
     int xOffset = 0;
     int yOffset = 0;
 
@@ -47,16 +50,31 @@ class Wrap {
         ratioMulti = r;
         return this;
     }
+    public void calcularCoordenadas(JFrame j){
+        int x = (int) (j.getWidth()*xRelative + xLatchDiff);
+        int y = (int) (j.getHeight()*yRelative + yLatchDiff);
+        xFinal = x;
+        yFinal = y;
+    }
     public void posicionarRelativo(JFrame j){
-        int x = (int) (j.getWidth()*xRelative + xLatchDiff - xOffset);
-        int y = (int) (j.getHeight()*yRelative + yLatchDiff - yOffset);
-        componente.setBounds(x, y, componente.getWidth(), componente.getHeight());
+        calcularCoordenadas(j);
+        componente.setBounds(xFinal-xOffset, yFinal-yOffset, componente.getWidth(), componente.getHeight());
     }
     public void dimensionarRelativo(JFrame j){
         int w = (int) (j.getWidth()*widthRelative);
         int h = (int) (j.getHeight()*heightRelative);
         componente.setSize(w, h);
     }
+    public void centerOffset(int x, int y){
+        if(x==1) xOffset = componente.getWidth()/2;
+        if(y==1) yOffset = componente.getHeight()/2;
+    }
+    public Wrap chainCenterOffset(int x, int y){
+        if(x==1) xOffset = componente.getWidth()/2;
+        if(y==1) yOffset = componente.getHeight()/2;
+        return this;
+    }
+
 }
 public class RasLayout {
     JFrame j;
@@ -131,10 +149,7 @@ public class RasLayout {
         //res.resize = false;
         return res;
     }
-    public void centerOffset(Wrap w, byte x, byte y){
-        if(x==1) w.xOffset = w.componente.getWidth()/2;
-        if(y==1) w.yOffset = w.componente.getHeight()/2;
-    }
+
     public void posicionar(Wrap wrap, int x, int y){
         wrap.componente.setLocation(x, y);
     }
@@ -142,20 +157,10 @@ public class RasLayout {
         wrap.componente.setSize(w, h);
     }
 
-    public void posicionarRelativo(Wrap w){
-        int x = (int) (j.getWidth()*w.xRelative + w.xLatchDiff - w.xOffset);
-        int y = (int) (j.getHeight()*w.yRelative + w.yLatchDiff - w.yOffset);
-        w.componente.setBounds(x, y, w.componente.getWidth(), w.componente.getHeight());
-    }
-    public void dimensionarRelativo(Wrap wr){
-        int w = (int) (j.getWidth()*wr.widthRelative);
-        int h = (int) (j.getHeight()*wr.heightRelative);
-        wr.componente.setSize(w, h);
-    }
 
     public void actualizarRelativo(Wrap wrap){
-        posicionarRelativo(wrap);
-        if(wrap.resize) dimensionarRelativo(wrap);
+        wrap.posicionarRelativo(j);
+        if(wrap.resize) wrap.dimensionarRelativo(j);
     }
     //en vez de usar otra layout para componentes, haz que se peguen a el
     public void offset(Wrap wrap, int x, int y){
@@ -163,10 +168,8 @@ public class RasLayout {
         wrap.xLatchDiff = x;
         wrap.yLatchDiff = y;
     }
-
     public static void refrescar(ArrayList<Wrap> w, RasLayout r){
         for(Wrap parte : w){
-            String n = parte.getClass().getName();
             r.actualizarRelativo(parte);
             //if(n.equals("JLabel") || n.equals("JTextField"));
         }
