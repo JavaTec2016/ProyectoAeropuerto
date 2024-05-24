@@ -47,6 +47,16 @@ class Wrap {
         ratioMulti = r;
         return this;
     }
+    public void posicionarRelativo(JFrame j){
+        int x = (int) (j.getWidth()*xRelative + xLatchDiff - xOffset);
+        int y = (int) (j.getHeight()*yRelative + yLatchDiff - yOffset);
+        componente.setBounds(x, y, componente.getWidth(), componente.getHeight());
+    }
+    public void dimensionarRelativo(JFrame j){
+        int w = (int) (j.getWidth()*widthRelative);
+        int h = (int) (j.getHeight()*heightRelative);
+        componente.setSize(w, h);
+    }
 }
 public class RasLayout {
     JFrame j;
