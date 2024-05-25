@@ -2,6 +2,7 @@ package vista.MenuPrincipal;
 
 import vista.PanelRasLayout;
 import vista.Panelo;
+import vista.VentanaPrincipal;
 import vista.Wrap;
 
 import javax.swing.*;
@@ -12,14 +13,14 @@ import java.util.ArrayList;
 public class PanelLateral extends Panelo {
     JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
         btnActual;
-    JFrame vn;
+    VentanaPrincipal vn;
     PanelSuperior sp;
     String[] tablas = {
             "Airplane", "Airplane_Technician_Test", "Aviation_Test", "Employee", "Model",
             "Technician_Model_Expertise", "Traffic_Controller"
     };
 
-    public PanelLateral(JFrame v, PanelSuperior superior){
+    public PanelLateral(VentanaPrincipal v, PanelSuperior superior){
         vn = v;
         x = 0;
         y = 0;
@@ -89,6 +90,13 @@ public class PanelLateral extends Panelo {
                     if(btnActual != null && btnActual != accioner) btnActual.setBackground(panelColor);
                     btnActual = accioner;
 
+                    if(accioner == btnAirplanes){
+                        String[] s = {"a","b","c"};
+                        vn.prepararTabla(s);
+                    }else if(accioner == btnAirplaneTests){
+                        String[] s = {"a","b","c","d","e"};
+                        vn.prepararTabla(s);
+                    }
                     //cambios al panel superior
                     //obtener la clase del modelo relacionado al boton
                     try {

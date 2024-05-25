@@ -30,7 +30,7 @@ public class Wrap {
 
     double ratioMulti = 1;
 
-    boolean resize = true;
+    public boolean resize = true;
 
     public Wrap(JComponent c){
         componente = c;

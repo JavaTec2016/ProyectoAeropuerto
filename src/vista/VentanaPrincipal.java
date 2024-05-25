@@ -99,6 +99,9 @@ public class VentanaPrincipal extends JFrame {
             }
         });
     }
+    public void prepararTabla(String[] tuplas){
+        panelTabla.prepararTabla(tuplas);
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

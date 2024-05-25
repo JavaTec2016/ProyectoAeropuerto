@@ -35,7 +35,20 @@ public class PanelTabla extends Panelo {
         tablaUniversal = new JTable();
         scroller = new JScrollPane(tablaUniversal);
         scroller.setVisible(false);
+        tablaUniversal.setBackground(panelColor);
 
+        Wrap wPlace = new Wrap(lblPlaceholder);
+        ras.agregarRelativo(wPlace, w/2, h/2, lblPlaceholder.getWidth(), lblPlaceholder.getHeight());
+        wPlace.centerOffset(1,1);
+
+        Wrap wScroll = new Wrap(scroller);
+        wScroll.resize = false;
+        ras.agregarRelativo(wScroll, w/2, h/2, (int) (w*0.8), (int) (h*0.8));
+        wScroll.centerOffset(1,1);
+        wScroll.posicionarRelativo(this);
+
+        salida.add(wScroll);
+        salida.add(wPlace);
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -47,5 +60,7 @@ public class PanelTabla extends Panelo {
         tuplas = tp;
         model = new DefaultTableModel(null, tuplas);
         tablaUniversal = new JTable(model);
+        scroller.setViewportView(tablaUniversal);
+        scroller.setVisible(true);
     }
 }
