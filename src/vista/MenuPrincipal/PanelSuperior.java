@@ -46,10 +46,26 @@ public class PanelSuperior extends Panelo {
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.setFont(new Font("Arial", Font.BOLD, 15));
 
-        btnAltas = new JButton("Agregar..");
-        btnBajas = new JButton("Eliminar..");
-        btnAltas = new JButton("Modificar..");
-        btnAltas = new JButton("Consultar..");
+        btnAltas = new JButton("AGREGAR..");
+        btnBajas = new JButton("ELIMINAR..");
+        btnCambios = new JButton("MODIFICAR..");
+        btnConsultas = new JButton("Consultar..");
+
+        btnAltas.setBackground(new Color(210,210,210));
+        btnAltas.setForeground(new Color(0, 85, 62));
+        btnAltas.setFont(new Font("Arial", Font.BOLD+Font.ITALIC, 15));
+
+        btnBajas.setBackground(new Color(133, 36, 36));
+        btnBajas.setForeground(new Color(210,210,210));
+        btnBajas.setFont(new Font("Arial", Font.BOLD+Font.ITALIC, 15));
+
+        btnCambios.setBackground(new Color(0, 78, 120));
+        btnCambios.setForeground(new Color(210,210,210));
+        btnCambios.setFont(new Font("Arial", Font.BOLD+Font.ITALIC, 15));
+
+        btnConsultas.setBackground(new Color(210,210,210));
+        btnConsultas.setForeground(new Color(0, 78, 120));
+        btnConsultas.setFont(new Font("Arial", Font.BOLD+Font.ITALIC, 15));
 
         Wrap wLblBuscar = new Wrap(lblBuscar);
         Wrap wTxtBuscar = new Wrap(txtBuscar);
@@ -60,18 +76,31 @@ public class PanelSuperior extends Panelo {
         Wrap wbtnCambios = new Wrap(btnCambios);
         Wrap wbtnConsultas = new Wrap(btnConsultas);
 
-        ras.agregarRelativo(wLblBuscar, 20, 35, 100, 20);
+        ras.agregarRelativo(wLblBuscar, 20, 55, 100, 20);
         wLblBuscar.centerOffset(0,1);
         wLblBuscar.posicionarRelativo(this);
-        ras.agregarRelativo(wTxtBuscar, wLblBuscar.xFrom+wLblBuscar.widthFrom+20, 20, 160, 30);
+        ras.agregarRelativo(wTxtBuscar, wLblBuscar.xFrom+wLblBuscar.widthFrom+20, 40, 160, 30);
         wLblBuscar.centerOffset(0,1);
-        ras.agregarRelativo(wBtnBuscar, wTxtBuscar.xFrom+wTxtBuscar.widthFrom+20, 20, 120, 30);
+        ras.agregarRelativo(wBtnBuscar, wTxtBuscar.xFrom+wTxtBuscar.widthFrom-120, wTxtBuscar.yFrom+wTxtBuscar.heightFrom+20, 120, 30);
         wLblBuscar.centerOffset(0,1);
 
+        ras.agregarRelativo(wbtnAltas, wBtnBuscar.xFrom+wBtnBuscar.widthFrom+100, 30, 130, 30);
+        wbtnAltas.centerOffset(1,1);
+        ras.agregarRelativo(wbtnBajas, wbtnAltas.xFrom+wbtnAltas.widthFrom+40, 30, 130, 30);
+        wbtnBajas.centerOffset(1,1);
+        ras.agregarRelativo(wbtnCambios, wbtnBajas.xFrom+wbtnBajas.widthFrom+40, 30, 130, 30);
+        wbtnCambios.centerOffset(1,1);
+        ras.agregarRelativo(wbtnConsultas, wbtnAltas.xFrom, wbtnAltas.yFrom+wbtnAltas.heightFrom+30, 130, 30);
+        wbtnConsultas.centerOffset(1,1);
 
         salida.add(wLblBuscar);
         salida.add(wTxtBuscar);
         salida.add(wBtnBuscar);
+
+        salida.add(wbtnAltas);
+        salida.add(wbtnBajas);
+        salida.add(wbtnCambios);
+        salida.add(wbtnConsultas);
 
         addComponentListener(new ComponentAdapter() {
             @Override
