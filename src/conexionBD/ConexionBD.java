@@ -4,13 +4,14 @@ import java.sql.*;
 public class ConexionBD {
     private Connection conexion;
     private Statement ste;
+    private static ConexionBD conector = null;
     /*NOTA: es preferible utilizar PreparedStatement para evitar
             SQL INJECTION
      */
 
     private ResultSet rs;
 
-    public ConexionBD(){
+    private ConexionBD(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -59,7 +60,13 @@ public class ConexionBD {
 
         return rs;
     }
-
+    //singleton
+    public static ConexionBD obtenerConector(){
+        if(conector == null){
+            conector = new ConexionBD();
+        }
+        return conector;
+    }
     public static void main(String[] args) {
         new ConexionBD();
     }

@@ -1,6 +1,7 @@
 package vista;
 
 import vista.MenuPrincipal.PanelLateral;
+import vista.MenuPrincipal.PanelSuperior;
 import vista.login.VentanaLogin;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class VentanaPrincipal extends JFrame {
     VentanaLogin vl;
     JPanel panelFondo;
     PanelLateral barraTablas;
+    PanelSuperior barraOpciones;
     public VentanaPrincipal(){
         partes = new ArrayList<Wrap>();
         ras = new RasLayout(this, "Aplicacion", 1200, 800);
@@ -24,6 +26,7 @@ public class VentanaPrincipal extends JFrame {
         panelFondo = new JPanel();
 
         barraTablas = new PanelLateral(this);
+        barraOpciones = new PanelSuperior(this, barraTablas);
 
         vl.setResizable(false);
         vl.setMaximizable(false);
@@ -46,9 +49,14 @@ public class VentanaPrincipal extends JFrame {
         barraTablas.setVisible(false);
         ras.agregarRelativo(wBarraTablas, barraTablas.x, barraTablas.y, barraTablas.w, barraTablas.h);
 
+        Wrap wBarraOpciones = new Wrap(barraOpciones);
+        barraOpciones.setEnabled(false);
+        barraOpciones.setVisible(false);
+        ras.agregarRelativo(wBarraOpciones, barraOpciones.x, barraOpciones.y, barraOpciones.w, barraOpciones.h);
 
         partes.add(wvl);
         partes.add(wFondo);
+        partes.add(wBarraOpciones);
         partes.add(wBarraTablas);
 
         addComponentListener(new ComponentAdapter() {
@@ -68,6 +76,9 @@ public class VentanaPrincipal extends JFrame {
 
                 barraTablas.setEnabled(true);
                 barraTablas.setVisible(true);
+
+                barraOpciones.setEnabled(true);
+                barraOpciones.setVisible(true);
 
 
             }

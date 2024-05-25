@@ -6,14 +6,12 @@ import vista.Wrap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class PanelLateral extends Panelo {
-    JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController;
+    JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
+        btnActual;
     JFrame vn;
     public PanelLateral(JFrame v){
         vn = v;
@@ -64,7 +62,8 @@ public class PanelLateral extends Panelo {
         for(Wrap comp : salida){
             comp.getComponente().setBackground(panelColor);
             comp.getComponente().setForeground(new Color(255,255,255));
-            comp.getComponente().setBorder(BorderFactory.createLineBorder(new Color(255,255,255,100)));
+            //comp.getComponente().setBorder(BorderFactory.createLineBorder(new Color(255,255,255,100)));
+            comp.getComponente().setBorder(BorderFactory.createMatteBorder(comp.widthFrom, 0, comp.widthFrom, 0, new Color(200,200,200)));
             comp.getComponente().setFont(new Font("Arial", Font.PLAIN, 15));
             comp.getComponente().addMouseListener(new MouseAdapter() {
                 @Override
@@ -75,6 +74,13 @@ public class PanelLateral extends Panelo {
                 @Override
                 public void mouseExited(MouseEvent e) {
                     comp.getComponente().setBackground(panelColor);
+                }
+            });
+            JButton accioner = (JButton)comp.getComponente();
+            accioner.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnActual = accioner;
                 }
             });
             //setear cada boton
