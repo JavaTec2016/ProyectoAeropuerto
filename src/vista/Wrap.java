@@ -4,20 +4,23 @@ import javax.swing.*;
 
 public class Wrap {
     JComponent componente;
-    int xFrom = 0;
-    int yFrom = 0;
+    public int xFrom = 0;
+    public int yFrom = 0;
 
-    int xFinal = 0;
-    int yFinal = 0;
+    public int xFinal = 0;
+    public int yFinal = 0;
 
-    int xOffset = 0;
-    int yOffset = 0;
+    public int xOffset = 0;
+    public int yOffset = 0;
+
+    public int centerX = 0;
+    public int centerY = 0;
 
     int xLatchDiff = 0;
     int yLatchDiff = 0;
 
-    int widthFrom = 0;
-    int heightFrom = 0;
+    public int widthFrom = 0;
+    public int heightFrom = 0;
 
     double xRelative = 0;
     double yRelative = 0;
@@ -80,12 +83,17 @@ public class Wrap {
         componente.setSize(w, h);
     }
     public void centerOffset(int x, int y){
+
         if(x==1) xOffset = componente.getWidth()/2;
         if(y==1) yOffset = componente.getHeight()/2;
+        centerX = x;
+        centerY = y;
     }
     public Wrap chainCenterOffset(int x, int y){
         if(x==1) xOffset = componente.getWidth()/2;
         if(y==1) yOffset = componente.getHeight()/2;
+        centerX = x;
+        centerY = y;
         return this;
     }
 

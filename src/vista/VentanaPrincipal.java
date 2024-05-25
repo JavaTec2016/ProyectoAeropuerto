@@ -29,8 +29,6 @@ public class VentanaPrincipal extends JFrame {
         panelFondo.setBackground(new Color(100, 100, 100));
         panelFondo.setForeground(new Color(255,255,255));
 
-
-
         Wrap wvl = new Wrap(vl);
         wvl.resize = false;
         ras.agregarRelativo(wvl, getWidth()/2, getHeight()/2, vl.w, vl.h);

@@ -93,6 +93,7 @@ public class InternalRasLayout {
     }
     public static void refrescar(ArrayList<Wrap> w, InternalRasLayout r){
         for(Wrap parte : w){
+            parte.centerOffset(parte.centerX, parte.centerY);
             r.actualizarRelativo(parte);
             //if(n.equals("JLabel") || n.equals("JTextField"));
         }
