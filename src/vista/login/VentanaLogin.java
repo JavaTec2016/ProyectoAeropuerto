@@ -1,9 +1,6 @@
 package vista.login;
 
-import vista.InternalRasLayout;
-import vista.RasLayout;
-import vista.Wrap;
-import vista.lblFont;
+import vista.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +11,13 @@ import java.util.ArrayList;
 public class VentanaLogin extends Ventana {
     JPanel panelLogin, panelCampos;
     lblFont lblIniciarSesion;
-    JTextField txtUsuario;
-    JPasswordField txtPass;
-    JButton btnValidar;
+    //public mientras se prueba
+    public JTextField txtUsuario;
+    public JPasswordField txtPass;
+    public JButton btnValidar;
     public VentanaLogin(){
         w = 800;
-        h = 600;
+        h = 500;
         tipo = "JInternalFrame";
         salida = new ArrayList<Wrap>();
         ras = new InternalRasLayout(this, "Iniciar Sesion", w, h);
@@ -87,7 +85,11 @@ public class VentanaLogin extends Ventana {
         });
 
     }
-
+    public byte verificarCredenciales(){
+        if(txtUsuario.getText().isBlank() || txtPass.getPassword().length == 0) return 11;
+        //else if credenciales incorrectas return 12
+        return 10;
+    }
 }
 /*
 class ventanaLogin extends Ventana{

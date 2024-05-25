@@ -58,7 +58,7 @@ public class Wrap {
         xFinal = x;
         yFinal = y;
     }
-    public void calcularCoordenadas(JInternalFrame j){
+    public void calcularCoordenadas(JComponent j){
         int x = (int) (j.getWidth()*xRelative + xLatchDiff);
         int y = (int) (j.getHeight()*yRelative + yLatchDiff);
         xFinal = x;
@@ -68,7 +68,7 @@ public class Wrap {
         calcularCoordenadas(j);
         componente.setBounds(xFinal-xOffset, yFinal-yOffset, componente.getWidth(), componente.getHeight());
     }
-    public void posicionarRelativo(JInternalFrame j){
+    public void posicionarRelativo(JComponent j){
         calcularCoordenadas(j);
         componente.setBounds(xFinal-xOffset, yFinal-yOffset, componente.getWidth(), componente.getHeight());
     }
@@ -77,7 +77,7 @@ public class Wrap {
         int h = (int) (j.getHeight()*heightRelative);
         componente.setSize(w, h);
     }
-    public void dimensionarRelativo(JInternalFrame j){
+    public void dimensionarRelativo(JComponent j){
         int w = (int) (j.getWidth()*widthRelative);
         int h = (int) (j.getHeight()*heightRelative);
         componente.setSize(w, h);

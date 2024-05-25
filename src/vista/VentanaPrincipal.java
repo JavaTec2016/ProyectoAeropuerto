@@ -1,13 +1,14 @@
 package vista;
 
-import vista.login.Ventana;
+import vista.MenuPrincipal.PanelLateral;
 import vista.login.VentanaLogin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
 public class VentanaPrincipal extends JFrame {
@@ -15,11 +16,14 @@ public class VentanaPrincipal extends JFrame {
     ArrayList<Wrap> partes;
     VentanaLogin vl;
     JPanel panelFondo;
+    PanelLateral barraTablas;
     public VentanaPrincipal(){
         partes = new ArrayList<Wrap>();
-        ras = new RasLayout(this, "Aplicacion", 1000, 800);
+        ras = new RasLayout(this, "Aplicacion", 1200, 800);
         vl = new VentanaLogin();
         panelFondo = new JPanel();
+
+        barraTablas = new PanelLateral(this);
 
         vl.setResizable(false);
         vl.setMaximizable(false);
@@ -37,9 +41,15 @@ public class VentanaPrincipal extends JFrame {
         Wrap wFondo = new Wrap(panelFondo);
         ras.agregarRelativo(wFondo, 0, 0, getWidth(), getHeight());
 
+        Wrap wBarraTablas = new Wrap(barraTablas);
+        barraTablas.setEnabled(false);
+        barraTablas.setVisible(false);
+        ras.agregarRelativo(wBarraTablas, barraTablas.x, barraTablas.y, barraTablas.w, barraTablas.h);
+
 
         partes.add(wvl);
         partes.add(wFondo);
+        partes.add(wBarraTablas);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -47,7 +57,21 @@ public class VentanaPrincipal extends JFrame {
                 RasLayout.refrescar(partes, ras);
             }
         });
+        vl.btnValidar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //ocultar la pantalla login
+                if(identificarError(vl.verificarCredenciales())) return;
+                vl.setVisible(false);
+                vl.setEnabled(false);
+                panelFondo.setVisible(false);
 
+                barraTablas.setEnabled(true);
+                barraTablas.setVisible(true);
+
+
+            }
+        });
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -56,5 +80,14 @@ public class VentanaPrincipal extends JFrame {
                 new VentanaPrincipal();
             }
         });
+    }
+    public boolean identificarError(int err){
+
+        switch (err){
+            case 11:
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña vacíos", "Error", JOptionPane.ERROR_MESSAGE);
+                return true;
+            default: return false;
+        }
     }
 }

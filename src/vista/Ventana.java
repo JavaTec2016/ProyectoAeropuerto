@@ -1,8 +1,4 @@
-package vista.login;
-
-import vista.InternalRasLayout;
-import vista.RasLayout;
-import vista.Wrap;
+package vista;
 
 import javax.swing.*;
 import java.util.ArrayList;
