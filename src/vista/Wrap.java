@@ -55,11 +55,26 @@ public class Wrap {
         xFinal = x;
         yFinal = y;
     }
+    public void calcularCoordenadas(JInternalFrame j){
+        int x = (int) (j.getWidth()*xRelative + xLatchDiff);
+        int y = (int) (j.getHeight()*yRelative + yLatchDiff);
+        xFinal = x;
+        yFinal = y;
+    }
     public void posicionarRelativo(JFrame j){
         calcularCoordenadas(j);
         componente.setBounds(xFinal-xOffset, yFinal-yOffset, componente.getWidth(), componente.getHeight());
     }
+    public void posicionarRelativo(JInternalFrame j){
+        calcularCoordenadas(j);
+        componente.setBounds(xFinal-xOffset, yFinal-yOffset, componente.getWidth(), componente.getHeight());
+    }
     public void dimensionarRelativo(JFrame j){
+        int w = (int) (j.getWidth()*widthRelative);
+        int h = (int) (j.getHeight()*heightRelative);
+        componente.setSize(w, h);
+    }
+    public void dimensionarRelativo(JInternalFrame j){
         int w = (int) (j.getWidth()*widthRelative);
         int h = (int) (j.getHeight()*heightRelative);
         componente.setSize(w, h);

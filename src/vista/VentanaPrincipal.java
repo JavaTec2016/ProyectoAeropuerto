@@ -13,21 +13,35 @@ import java.util.ArrayList;
 public class VentanaPrincipal extends JFrame {
     RasLayout ras;
     ArrayList<Wrap> partes;
-
-    VentanaLogin login;
-    JInternalFrame frameLogin = new JInternalFrame();
-
+    VentanaLogin vl;
+    JPanel panelFondo;
     public VentanaPrincipal(){
-        login = new VentanaLogin();
-        ras = new RasLayout(this, "Aplicacion", 1000, 800);
-
         partes = new ArrayList<Wrap>();
+        ras = new RasLayout(this, "Aplicacion", 1000, 800);
+        vl = new VentanaLogin();
+        panelFondo = new JPanel();
 
-        login = new VentanaLogin();
-        setForeground(new Color(43, 43, 43));
-        Wrap wLogin = new Wrap(frameLogin);
+        vl.setResizable(false);
+        vl.setMaximizable(false);
+        vl.setIconifiable(false);
+        vl.setClosable(false);
 
-        //swapInternal(frameLogin, login);
+        panelFondo.setBackground(new Color(100, 100, 100));
+        panelFondo.setForeground(new Color(255,255,255));
+
+
+
+        Wrap wvl = new Wrap(vl);
+        wvl.resize = false;
+        ras.agregarRelativo(wvl, getWidth()/2, getHeight()/2, vl.w, vl.h);
+        wvl.centerOffset(1,1);
+
+        Wrap wFondo = new Wrap(panelFondo);
+        ras.agregarRelativo(wFondo, 0, 0, getWidth(), getHeight());
+
+
+        partes.add(wvl);
+        partes.add(wFondo);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -36,46 +50,7 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 
-
     }
-    //construye la ventana especificada
-    public void swap(Ventana v){
-        removeAll();
-        revalidate();
-        repaint();
-        partes = v.salida;
-        for(Wrap parte : partes){
-            add(parte.componente);
-        }
-    }
-    public void swapInternal(JInternalFrame ji, Ventana v){
-        ji.removeAll();
-        ji.revalidate();
-        ji.repaint();
-
-        partes = v.salida;
-        for(Wrap parte : partes){
-            ji.add(parte.componente);
-        }
-
-        frameLogin.getContentPane().setLayout(null);
-        frameLogin.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-        frameLogin.setTitle(v.title);
-        frameLogin.setSize(v.w, v.h);
-        frameLogin.setVisible(true);
-        frameLogin.setClosable(true);
-        frameLogin.setMaximizable(true);
-        frameLogin.setIconifiable(true);
-        frameLogin.setResizable(true);
-
-        frameLogin.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                RasLayout.refrescar(partes, ras);
-            }
-        });
-    }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
