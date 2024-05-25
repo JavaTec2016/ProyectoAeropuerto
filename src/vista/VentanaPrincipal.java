@@ -2,9 +2,11 @@ package vista;
 
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
+import vista.MenuPrincipal.PanelTabla;
 import vista.login.VentanaLogin;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,14 +21,18 @@ public class VentanaPrincipal extends JFrame {
     JPanel panelFondo;
     PanelLateral barraTablas;
     PanelSuperior barraOpciones;
+    PanelTabla panelTabla;
+
     public VentanaPrincipal(){
         partes = new ArrayList<Wrap>();
         ras = new RasLayout(this, "Aplicacion", 1200, 800);
         vl = new VentanaLogin();
         panelFondo = new JPanel();
 
-        barraTablas = new PanelLateral(this);
+        barraTablas = new PanelLateral(this, barraOpciones);
         barraOpciones = new PanelSuperior(this, barraTablas);
+        panelTabla = new PanelTabla(this, barraTablas.w, barraOpciones.h, getWidth()-barraTablas.w, getHeight()-barraOpciones.h);
+
 
         vl.setResizable(false);
         vl.setMaximizable(false);
@@ -54,8 +60,14 @@ public class VentanaPrincipal extends JFrame {
         barraOpciones.setVisible(false);
         ras.agregarRelativo(wBarraOpciones, barraOpciones.x, barraOpciones.y, barraOpciones.w, barraOpciones.h);
 
+        Wrap wPanelTabla = new Wrap(panelTabla);
+        panelTabla.setVisible(false);
+        panelTabla.setEnabled(false);
+        ras.agregarRelativo(wPanelTabla, panelTabla.x, panelTabla.y, panelTabla.w, panelTabla.h);
+
         partes.add(wvl);
         partes.add(wFondo);
+        partes.add(wPanelTabla);
         partes.add(wBarraOpciones);
         partes.add(wBarraTablas);
 
@@ -80,7 +92,10 @@ public class VentanaPrincipal extends JFrame {
                 barraOpciones.setEnabled(true);
                 barraOpciones.setVisible(true);
 
+                panelTabla.setEnabled(true);
+                panelTabla.setVisible(true);
 
+                setTitle("Panel de control - Aeropuerto");
             }
         });
     }
@@ -92,6 +107,7 @@ public class VentanaPrincipal extends JFrame {
             }
         });
     }
+
     public boolean identificarError(int err){
 
         switch (err){

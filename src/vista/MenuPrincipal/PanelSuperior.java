@@ -1,5 +1,6 @@
 package vista.MenuPrincipal;
 
+import modelo.Registrable;
 import vista.PanelRasLayout;
 import vista.Panelo;
 import vista.Wrap;
@@ -24,7 +25,7 @@ public class PanelSuperior extends Panelo {
     JButton btnCambios;
     JButton btnConsultas;
 
-
+    Class<?> modelo;
 
     public PanelSuperior(JFrame v, Panelo lateral){
         vn = v;

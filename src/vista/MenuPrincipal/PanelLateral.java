@@ -13,7 +13,13 @@ public class PanelLateral extends Panelo {
     JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
         btnActual;
     JFrame vn;
-    public PanelLateral(JFrame v){
+    PanelSuperior sp;
+    String[] tablas = {
+            "Airplane", "Airplane_Technician_Test", "Aviation_Test", "Employee", "Model",
+            "Technician_Model_Expertise", "Traffic_Controller"
+    };
+
+    public PanelLateral(JFrame v, PanelSuperior superior){
         vn = v;
         x = 0;
         y = 0;
@@ -21,6 +27,7 @@ public class PanelLateral extends Panelo {
         h = vn.getHeight();
         salida = new ArrayList<Wrap>();
         ras = new PanelRasLayout(this, x, y, w, h);
+        sp = superior;
         Color panelColor = new Color(50, 50, 50);
         setBackground(panelColor);
 
@@ -34,9 +41,7 @@ public class PanelLateral extends Panelo {
         btnExpertises = new JButton("Experiencia de Tecnicos");
         btnTrafficController = new JButton("Controladores de Trafico");
 
-        btnModels.setBackground(new Color(0,0,0,0));
-        btnModels.setForeground(new Color(255,255,255));
-        btnModels.setBorder(BorderFactory.createLineBorder(new Color(255,255,255,100)));
+
 
         Wrap wBtnModels = new Wrap(btnModels);
         Wrap wBtnAirplanes = new Wrap(btnAirplanes);
@@ -58,8 +63,9 @@ public class PanelLateral extends Panelo {
 
         int yBoton = y+50*salida.size();
         int hBoton = (getHeight()-yBoton)/salida.size();
-
+        int i = 0;
         for(Wrap comp : salida){
+            comp.getComponente().setName(tablas[i]);
             comp.getComponente().setBackground(panelColor);
             comp.getComponente().setForeground(new Color(255,255,255));
             //comp.getComponente().setBorder(BorderFactory.createLineBorder(new Color(255,255,255,100)));
@@ -73,20 +79,34 @@ public class PanelLateral extends Panelo {
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    comp.getComponente().setBackground(panelColor);
+                    if(btnActual != comp.getComponente()) comp.getComponente().setBackground(panelColor);
                 }
             });
             JButton accioner = (JButton)comp.getComponente();
             accioner.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if(btnActual != null && btnActual != accioner) btnActual.setBackground(panelColor);
                     btnActual = accioner;
+
+                    //cambios al panel superior
+                    //obtener la clase del modelo relacionado al boton
+                    try {
+
+                        Class<?> modelo = Class.forName("modelo."+accioner.getName());
+                        System.out.println(modelo.getDeclaredFields()[0].getName());
+                    } catch (ClassNotFoundException ex) {
+                        System.out.println("Ningun modelo con el nomnbre: " + accioner.getName());
+                    }
+
                 }
             });
             //setear cada boton
             ras.agregarRelativo(comp, x, yBoton, w, 50);
             comp.posicionarRelativo(this);
             yBoton += 50;
+
+            i++;
         }
 
         addComponentListener(new ComponentAdapter() {

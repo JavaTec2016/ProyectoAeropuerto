@@ -3,9 +3,9 @@ package modelo;
 import java.lang.reflect.Field;
 
 public class Airplane_Technician_Test implements Registrable {
+    String Registration_Number;
     String SSN;
     String Model_Number;
-    String Registration_Number;
     int Number_FAA;
     String Test_Begin;
     short Hours_Spent;
