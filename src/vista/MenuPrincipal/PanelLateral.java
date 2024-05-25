@@ -1,5 +1,6 @@
 package vista.MenuPrincipal;
 
+import modelo.Registrable;
 import vista.PanelRasLayout;
 import vista.Panelo;
 import vista.VentanaPrincipal;
@@ -8,6 +9,7 @@ import vista.Wrap;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class PanelLateral extends Panelo {
@@ -15,9 +17,9 @@ public class PanelLateral extends Panelo {
         btnActual;
     VentanaPrincipal vn;
     PanelSuperior sp;
+
     String[] tablas = {
-            "Airplane", "Airplane_Technician_Test", "Aviation_Test", "Employee", "Model",
-            "Technician_Model_Expertise", "Traffic_Controller"
+            "Model","Airplane","Airplane_Technician_Test","Aviation_Test", "Employee", "Technician_Model_Expertise", "Traffic_Controller"
     };
 
     public PanelLateral(VentanaPrincipal v, PanelSuperior superior){
@@ -40,7 +42,7 @@ public class PanelLateral extends Panelo {
         btnAviationTests = new JButton("Pruebas de Aviacion");
         btnEmployees = new JButton("Empleados");
         btnExpertises = new JButton("Experiencia de Tecnicos");
-        btnTrafficController = new JButton("Controladores de Trafico");
+        btnTrafficController = new JButton("Examenes de Controladores");
 
 
 
@@ -100,9 +102,19 @@ public class PanelLateral extends Panelo {
                     //cambios al panel superior
                     //obtener la clase del modelo relacionado al boton
                     try {
-
+                        String[] tuplas;
+                        Field[] campos;
                         Class<?> modelo = Class.forName("modelo."+accioner.getName());
-                        System.out.println(modelo.getDeclaredFields()[0].getName());
+                        //obtener las tuplas del modelo
+                        campos = modelo.getDeclaredFields();
+                        tuplas = new String[campos.length];
+                        int i = 0;
+                        for(Field campo : campos){
+                            tuplas[i] = campo.getName();
+                            i++;
+                        }
+                        //y preparar la tabla
+                        vn.prepararTabla(tuplas);
                     } catch (ClassNotFoundException ex) {
                         System.out.println("Ningun modelo con el nomnbre: " + accioner.getName());
                     }

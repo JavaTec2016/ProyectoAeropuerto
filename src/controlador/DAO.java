@@ -149,5 +149,7 @@ public class DAO {
                 "SSN='Seguridad Social'", "First_Name='RAS'");
 
         d.actualizarUniversal(new Model("DC-10", 30, 172), "Model_Number='DC-10'");
+
+        d.agregarUniversal(new Airplane("DC-10", "12345"));
     }
 }

@@ -43,12 +43,13 @@ public class PanelTabla extends Panelo {
 
         Wrap wScroll = new Wrap(scroller);
         wScroll.resize = false;
-        ras.agregarRelativo(wScroll, w/2, h/2, (int) (w*0.8), (int) (h*0.8));
+        ras.agregarRelativo(wScroll, w/2, h/2, (int) (w*0.9), (int) (h*0.8));
         wScroll.centerOffset(1,1);
         wScroll.posicionarRelativo(this);
 
         salida.add(wScroll);
         salida.add(wPlace);
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

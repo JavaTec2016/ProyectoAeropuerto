@@ -1,15 +1,17 @@
 package modelo;
 
-public class Airplane extends Model{
+public class Airplane extends ModeloBD{
+
+
     String Model_Number;
-    int Capacity;
-    int Weight;
+    //int Capacity;
+    //int Weight;
 
     String Registration_Number;
 
-    public Airplane(String model_Number, int capacity, int weight, String registration_Number) {
-        super(model_Number, capacity, weight);
+    public Airplane(String model_Number, String registration_Number) {
         Registration_Number = registration_Number;
+        Model_Number = model_Number;
     }
 
     @Override
@@ -17,8 +19,6 @@ public class Airplane extends Model{
         return "Airplane{" +
                 "Registration_Number='" + Registration_Number + '\'' +
                 ", Model_Number='" + Model_Number + '\'' +
-                ", Capacity=" + Capacity +
-                ", Weight=" + Weight +
                 '}';
     }
 }
