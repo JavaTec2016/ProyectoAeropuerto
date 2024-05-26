@@ -81,17 +81,17 @@ public class PanelSuperior extends Panelo {
         wLblBuscar.posicionarRelativo(this);
         ras.agregarRelativo(wTxtBuscar, wLblBuscar.xFrom+wLblBuscar.widthFrom+20, 40, 160, 30);
         wLblBuscar.centerOffset(0,1);
-        ras.agregarRelativo(wBtnBuscar, wTxtBuscar.xFrom+wTxtBuscar.widthFrom-120, wTxtBuscar.yFrom+wTxtBuscar.heightFrom+20, 120, 30);
-        wLblBuscar.centerOffset(0,1);
+        ras.agregarRelativo(wBtnBuscar, wTxtBuscar.xFrom+wTxtBuscar.widthFrom-120, wTxtBuscar.yFrom+wTxtBuscar.heightFrom+30, 120, 30);
+        wBtnBuscar.centerOffset(0,1, this);
 
-        ras.agregarRelativo(wbtnAltas, wBtnBuscar.xFrom+wBtnBuscar.widthFrom+100, 30, 130, 30);
-        wbtnAltas.centerOffset(1,1);
-        ras.agregarRelativo(wbtnBajas, wbtnAltas.xFrom+wbtnAltas.widthFrom+40, 30, 130, 30);
-        wbtnBajas.centerOffset(1,1);
-        ras.agregarRelativo(wbtnCambios, wbtnBajas.xFrom+wbtnBajas.widthFrom+40, 30, 130, 30);
-        wbtnCambios.centerOffset(1,1);
+        ras.agregarRelativo(wbtnAltas, wBtnBuscar.xFrom+wBtnBuscar.widthFrom+160, 45, 130, 30);
+        wbtnAltas.centerOffset(1,1, this);
+        ras.agregarRelativo(wbtnBajas, wbtnAltas.xFrom+wbtnAltas.widthFrom+40, 45, 130, 30);
+        wbtnBajas.centerOffset(1,1, this);
+        ras.agregarRelativo(wbtnCambios, wbtnBajas.xFrom+wbtnBajas.widthFrom+40, 45, 130, 30);
+        wbtnCambios.centerOffset(1,1, this);
         ras.agregarRelativo(wbtnConsultas, wbtnAltas.xFrom, wbtnAltas.yFrom+wbtnAltas.heightFrom+30, 130, 30);
-        wbtnConsultas.centerOffset(1,1);
+        wbtnConsultas.centerOffset(1,1, this);
 
         salida.add(wLblBuscar);
         salida.add(wTxtBuscar);

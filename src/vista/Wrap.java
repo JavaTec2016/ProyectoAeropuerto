@@ -88,6 +88,15 @@ public class Wrap {
         if(y==1) yOffset = componente.getHeight()/2;
         centerX = x;
         centerY = y;
+
+    }
+    public void centerOffset(int x, int y, Panelo p){
+
+        if(x==1) xOffset = componente.getWidth()/2;
+        if(y==1) yOffset = componente.getHeight()/2;
+        centerX = x;
+        centerY = y;
+        posicionarRelativo(p);
     }
     public Wrap chainCenterOffset(int x, int y){
         if(x==1) xOffset = componente.getWidth()/2;

@@ -23,6 +23,11 @@ public class VentanaPrincipal extends JFrame {
     PanelSuperior barraOpciones;
     PanelTabla panelTabla;
 
+    Ventana ventanaAltas;
+    Ventana ventanaBajas;
+    Ventana ventanaCambios;
+    Ventana ventanaConsultas;
+
     public VentanaPrincipal(){
         partes = new ArrayList<Wrap>();
         ras = new RasLayout(this, "Aplicacion", 1200, 800);
@@ -32,6 +37,7 @@ public class VentanaPrincipal extends JFrame {
         barraTablas = new PanelLateral(this, barraOpciones);
         barraOpciones = new PanelSuperior(this, barraTablas);
         panelTabla = new PanelTabla(this, barraTablas.w, barraOpciones.h, getWidth()-barraTablas.w, getHeight()-barraOpciones.h);
+
 
 
         vl.setResizable(false);
