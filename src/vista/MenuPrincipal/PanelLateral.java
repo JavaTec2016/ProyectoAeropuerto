@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class PanelLateral extends Panelo {
-    JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
+    public JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
         btnActual;
     VentanaPrincipal vn;
     PanelSuperior sp;

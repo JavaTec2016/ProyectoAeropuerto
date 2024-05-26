@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class DAO {
     ConexionBD conexion = ConexionBD.obtenerConector();
 
+    public static DAO d = new DAO();
     //metodo puercote, identifica y registra dinamicamente los diferentes objetos que usa la BD
     //0: operacion exitosa
     //1: un campo no existe para el objeto dado

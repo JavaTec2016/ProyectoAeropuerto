@@ -56,6 +56,7 @@ public class VentanaPrincipal extends JFrame {
         add(desk);
 
         Wrap wDesk = new Wrap(desk);
+        wDesk.resize = false;
         ras.agregarRelativo(wDesk, desk.getX(), desk.getY(), desk.getWidth(), desk.getHeight());
         partes.add(wDesk);
 
@@ -172,6 +173,11 @@ public class VentanaPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //cambiar la ventana y mover el desk
+                if(barraTablas.btnActual == null){
+                    JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 desk.setVisible(true);
                 desk.remove(ventanaAltas);
                 ventanaAltas = new altasModel();

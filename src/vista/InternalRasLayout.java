@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class InternalRasLayout {
     JInternalFrame j;
-    int cw = 1;
-    int ch = 1;
+    public int cw = 1;
+    public int ch = 1;
 
     public InternalRasLayout(JInternalFrame J){
         j = J;
