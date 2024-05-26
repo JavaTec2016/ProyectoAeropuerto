@@ -20,7 +20,7 @@ public class InternalRasLayout {
     public InternalRasLayout(JInternalFrame J, String nom, int w, int h){
         j = J;
         j.getContentPane().setLayout(null);
-        j.setDefaultCloseOperation(j.EXIT_ON_CLOSE);
+        //j.setDefaultCloseOperation(j.EXIT_ON_CLOSE);
         j.setTitle(nom);
         j.setSize(w, h);
         j.setVisible(true);

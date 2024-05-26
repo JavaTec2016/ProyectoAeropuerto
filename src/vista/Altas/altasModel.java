@@ -6,15 +6,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 public class altasModel extends Ventana {
     Panelo panelAgregar;
     lblFont lblAgregar;
+
     public altasModel(){
         w = 800;
         h = 600;
         title = "Agregar Modelo";
         ras = new InternalRasLayout(this, title, w, h);
+        salida = new ArrayList<Wrap>();
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(false);
+        setMaximizable(false);
+
+
         lblAgregar = new lblFont("DATOS DEL MODELO", "Arial", Font.BOLD, 30, 0,0,0);
         panelAgregar = new Panelo();
         panelAgregar.w = w;
@@ -22,13 +31,14 @@ public class altasModel extends Ventana {
         panelAgregar.x = 0;
         panelAgregar.y = 0;
         panelAgregar.ras = new PanelRasLayout(panelAgregar, 0, 0, w, h/6);
+        panelAgregar.salida = new ArrayList<Wrap>();
         panelAgregar.setBackground(new Color(94, 189, 94));
 
         Wrap wPanel = new Wrap(panelAgregar);
         Wrap wLblAgregar = new Wrap(lblAgregar);
 
         ras.agregarRelativo(wPanel, panelAgregar.x, panelAgregar.y, panelAgregar.w, panelAgregar.h);
-        panelAgregar.ras.agregarRelativo(wLblAgregar, 30, 30, panelAgregar.w/2, panelAgregar.h/2);
+        panelAgregar.ras.agregarRelativo(wLblAgregar, panelAgregar.w/2, panelAgregar.h/2, 450, 30);
         wLblAgregar.centerOffset(1,1);
 
         panelAgregar.salida.add(wLblAgregar);

@@ -20,10 +20,10 @@ public class PanelSuperior extends Panelo {
 
     //los 4 fantasticos
 
-    JButton btnAltas;
-    JButton btnBajas;
-    JButton btnCambios;
-    JButton btnConsultas;
+    public JButton btnAltas;
+    public JButton btnBajas;
+    public JButton btnCambios;
+    public JButton btnConsultas;
 
     Class<?> modelo;
 
