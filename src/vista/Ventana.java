@@ -22,6 +22,8 @@ public class Ventana extends JInternalFrame{
     public JComponent identificarComponente(String nombre){
         if(nombre.equals("JTextField")) return new JTextField(10);
         if(nombre.equals("JComboBox")) return new JComboBox<String>();
+        System.out.println("Componente no identificado: " + nombre);
+        return null;
     }
     public String extraerInput(JComponent comp){
         if(comp instanceof JTextField) return ((JTextField)comp).getText();

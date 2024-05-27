@@ -1,6 +1,7 @@
 package vista;
 
 import vista.Altas.altasAirplane;
+import vista.Altas.altasEmployee;
 import vista.Altas.altasModel;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
@@ -186,7 +187,7 @@ public class VentanaPrincipal extends JFrame {
                 if(barraTablas.btnActual == barraTablas.btnAirplanes){
                     v = new altasAirplane();
                 }else if(barraTablas.btnActual == barraTablas.btnEmployees){
-
+                    v = new altasEmployee();
                 }else if(barraTablas.btnActual == barraTablas.btnExpertises){
 
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
