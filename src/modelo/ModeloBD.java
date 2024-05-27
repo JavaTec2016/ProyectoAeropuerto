@@ -24,4 +24,5 @@ public class ModeloBD implements Registrable {
         }
         return res;
     }
+
 }

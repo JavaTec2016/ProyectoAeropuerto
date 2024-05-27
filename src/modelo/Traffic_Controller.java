@@ -22,6 +22,10 @@ public class Traffic_Controller extends ModeloBD{
                 "JTextField", "JTextField"
         };
     }
+
+    public static String[] obtenerLabels(){
+        return new String[]{"SSN", "Fecha de ultimo examen"};
+    }
     public static String[] obtenerTipoDato(){
         return new String[]{"CHAR", "DATE"};
     }

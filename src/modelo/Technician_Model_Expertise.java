@@ -31,6 +31,10 @@ public class Technician_Model_Expertise implements Registrable {
         }
         return res;
     }
+
+    public static String[] obtenerLabels(){
+        return new String[]{"SSN", "Numero de modelo"};
+    }
     public static String[] obtenerComponentes(){
         return new String[]{
                 "JTextField", "JTextField"

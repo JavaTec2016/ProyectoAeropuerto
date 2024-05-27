@@ -25,6 +25,9 @@ public class Airplane extends ModeloBD{
                 "JTextField", "JTextField"
         };
     }
+    public static String[] obtenerLabels(){
+        return new String[]{"Numero de modelo", "Numero de registro"};
+    }
     public static String[] obtenerTipoDato(){
         return new String[]{"CHAR", "int"};
     }

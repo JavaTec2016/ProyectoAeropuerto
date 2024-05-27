@@ -1,6 +1,7 @@
 package modelo;
 
 import java.lang.reflect.Field;
+import java.sql.Statement;
 
 public class Employee implements Registrable {
     String SSN;
@@ -69,6 +70,9 @@ public class Employee implements Registrable {
                 "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField",
                 "JComboBox"
         };
+    }
+    public static  String[] obtenerLabels(){
+        return new String[]{"SSN", "Nombre", "Apellido", "Nombre de Calle", "Nombre de Ciudad", "Codigo postal", "Numero telefonico", "Membresia de sindicato", "Salario", "Cargo"};
     }
     public static String[] obtenerTipoDato(){
         return new String[]{"CHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "int", "double", "VARCHAR"};

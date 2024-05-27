@@ -42,6 +42,10 @@ public class Airplane_Technician_Test implements Registrable {
         }
         return res;
     }
+
+    public static String[] obtenerLabels(){
+        return new String[]{"SSN", "Numero de modelo", "Numero de registro", "Numero de prueba FAA", "Fecha de inicio", "Horas tomadas", "Puntuacion obtenida"};
+    }
     public static String[] obtenerComponentes(){
         return new String[]{
                 "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField"

@@ -42,6 +42,10 @@ public class Model implements Registrable {
         }
         return res;
     }
+
+    public static String[] obtenerLabels(){
+        return new String[]{"Numero de modelo", "Capacidad", "Peso"};
+    }
     public static String[] obtenerComponentes(){
         return new String[]{
                 "JTextField", "JTextField", "JTextField"

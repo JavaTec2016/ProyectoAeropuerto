@@ -43,6 +43,11 @@ public class Aviation_Test implements Registrable {
         }
         return res;
     }
+
+
+    public static String[] obtenerLabels(){
+        return new String[]{"Numero de prueba FAA", "Nombre de prueba", "Puntuacion maxima"};
+    }
     public static String[] obtenerComponentes(){
         return new String[]{
                 "JTextField", "JTextField", "JTextField"
