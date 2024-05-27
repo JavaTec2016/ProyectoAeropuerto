@@ -42,4 +42,18 @@ public class Model implements Registrable {
         }
         return res;
     }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField", "JTextField"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"CHAR", "int", "int"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true, true};
+    }
+    public static int[] obtenerLongitudes(){
+        return new int[]{5, -1, -1};
+    }
 }

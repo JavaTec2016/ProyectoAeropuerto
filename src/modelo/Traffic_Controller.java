@@ -17,5 +17,19 @@ public class Traffic_Controller extends ModeloBD{
                 ", Last_Exam=" + Last_Exam + '\'' +
                 '}';
     }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"CHAR", "DATE"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true};
+    }
+    public static int[] obtenerLongitudes(){
+        return new int[]{20, -2};
+    }
     //el metodo de la superclase incluye a los nuevos atributos
 }

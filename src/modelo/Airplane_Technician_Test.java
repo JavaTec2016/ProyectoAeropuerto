@@ -3,16 +3,16 @@ package modelo;
 import java.lang.reflect.Field;
 
 public class Airplane_Technician_Test implements Registrable {
-    String Registration_Number;
     String SSN;
-    String Model_Number;
     int Number_FAA;
+    int Registration_Number;
+    String Model_Number;
     String Test_Begin;
     short Hours_Spent;
     short Score_Recieved;
 
     public Airplane_Technician_Test(){}
-    public Airplane_Technician_Test(String SSN, String model_Number, String registration_Number, int number_FAA, String test_Begin, short hours_Spent, short score_Recieved) {
+    public Airplane_Technician_Test(String SSN, String model_Number, int registration_Number, int number_FAA, String test_Begin, short hours_Spent, short score_Recieved) {
         this.SSN = SSN;
         Model_Number = model_Number;
         Registration_Number = registration_Number;
@@ -41,5 +41,21 @@ public class Airplane_Technician_Test implements Registrable {
             i++;
         }
         return res;
+    }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"CHAR", "int", "int", "CHAR", "DATE", "short", "short"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true, true, true, true, true, true};
+    }
+    //-1 numero
+    //-2 date
+    public static int[] obtenerLongitudes(){
+        return new int[]{20, -1, -1, 5, -2, -1, -1};
     }
 }

@@ -1,5 +1,6 @@
 package vista;
 
+import vista.Altas.altasAirplane;
 import vista.Altas.altasModel;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
@@ -179,8 +180,25 @@ public class VentanaPrincipal extends JFrame {
                 }
 
                 desk.setVisible(true);
-                desk.remove(ventanaAltas);
-                ventanaAltas = new altasModel();
+                desk.removeAll();
+                Ventana v = new altasModel();
+
+                if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    v = new altasAirplane();
+                }else if(barraTablas.btnActual == barraTablas.btnEmployees){
+
+                }else if(barraTablas.btnActual == barraTablas.btnExpertises){
+
+                }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
+
+                }
+                else if(barraTablas.btnActual == barraTablas.btnAviationTests){
+
+                }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
+
+                }
+
+                ventanaAltas = v;
                 ras.prepararRelativo(wAltas, 0, 0, ventanaAltas.w, ventanaAltas.h);
                 wAltas.centerOffset(0,0);
                 ras.actualizarRelativo(wAltas);

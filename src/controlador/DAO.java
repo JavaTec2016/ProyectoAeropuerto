@@ -151,6 +151,6 @@ public class DAO {
 
         d.actualizarUniversal(new Model("DC-10", 30, 172), "Model_Number='DC-10'");
 
-        d.agregarUniversal(new Airplane("DC-10", "12345"));
+        d.agregarUniversal(new Airplane("DC-10", 12345));
     }
 }

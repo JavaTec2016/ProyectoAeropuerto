@@ -31,4 +31,18 @@ public class Technician_Model_Expertise implements Registrable {
         }
         return res;
     }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"CHAR", "CHAR"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true};
+    }
+    public static int[] obtenerLongitudes(){
+        return new int[]{20, 5};
+    }
 }

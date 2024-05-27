@@ -64,4 +64,19 @@ public class Employee implements Registrable {
         }
         return res;
     }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField",
+                "JComboBox"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"CHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR", "int", "double", "VARCHAR"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true, false, true, true, false, true, true, true, true};
+    }
+    public static int[] obtenerLongitudes(){
+        return new int[]{20, 30, 30, 30, 30, 10, 10, -1, -1, 30};
+    }
 }

@@ -1,5 +1,6 @@
 package vista.Altas;
 
+import modelo.Airplane;
 import modelo.Model;
 import vista.*;
 
@@ -30,7 +31,7 @@ public class altasAirplane extends Ventana{
     public altasAirplane(){
         ref = this;
         w = 800;
-        h = 600;
+        h = 400;
         title = "Agregar Avion";
         ras = new InternalRasLayout(this, title, w, h);
         salida = new ArrayList<Wrap>();
@@ -63,16 +64,17 @@ public class altasAirplane extends Ventana{
         Wrap wPanel = new Wrap(panelAgregar);
         Wrap wLblAgregar = new Wrap(lblAgregar);
 
-        int xi = 5, yi = 10;
+        int xi = 5, yi = 7;
         ras.agregarRelativo(wPanel, panelAgregar.x, panelAgregar.y, panelAgregar.w, panelAgregar.h);
-        Wrap wLblRegistro = ras.encuadrarRelativo(new lblFont("Numero de Modelo", "Arial", Font.PLAIN, 15, 0,0,0), xi, yi, 8, 2);
-        Wrap wtxtRegistro = ras.encuadrarRelativo(txtRegistrationNumber, xi+8+2, yi, 12, 2);
-        Wrap wLblModelo = ras.encuadrarRelativo(new lblFont("Capacidad", "Arial", Font.PLAIN, 15, 0,0,0), xi, yi+3, 8, 2);
-        Wrap wtxtModelo = ras.encuadrarRelativo(txtModelNumber, xi+8+2, yi+3, 12, 2);
 
-        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi-2, yi+14, 12, 2);
-        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+12+2, yi+14, 12,2);
-        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+14+9, yi+5, 10,2);
+        Wrap wLblModelo = ras.encuadrarRelativo(new lblFont("Numero de Modelo", "Arial", Font.PLAIN, 15, 0,0,0), xi, yi, 8, 2);
+        Wrap wtxtModelo = ras.encuadrarRelativo(txtModelNumber, xi+8+2, yi, 12, 2);
+        Wrap wLblRegistro = ras.encuadrarRelativo(new lblFont("Numero de Registro", "Arial", Font.PLAIN, 15, 0,0,0), xi, yi+3, 8, 2);
+        Wrap wtxtRegistro = ras.encuadrarRelativo(txtRegistrationNumber, xi+8+2, yi+3, 12, 2);
+
+        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi-2, yi+8, 12, 2);
+        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+12+2, yi+8, 12,2);
+        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+14+9, yi+2, 10,2);
 
         wBtnValidar.centerOffset(1,1);
         wBtnCancelar.centerOffset(1,1);
@@ -94,8 +96,46 @@ public class altasAirplane extends Ventana{
         salida.add(wBtnCancelar);
         salida.add(wBtnLimpiar);
 
+        btnLimpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtRegistrationNumber.setText("");
+                txtModelNumber.setText("");
+            }
+        });
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ref.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        btnValidar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(txtModelNumber.getText().length() != 5){
+                    JOptionPane.showMessageDialog(ref,"Longitud del numero de modelo incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try{
 
-        
+                    int reg = Integer.parseInt(txtRegistrationNumber.getText());
+
+                    Airplane m = new Airplane(txtModelNumber.getText(), reg);
+
+                    //cosas de DAO y sql
+                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Agregado", JOptionPane.INFORMATION_MESSAGE);
+                    dao.agregarUniversal(m);
+
+                }catch (NumberFormatException exc){
+                    JOptionPane.showMessageDialog(ref, "Formato de numero de registro incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         panelAgregar.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

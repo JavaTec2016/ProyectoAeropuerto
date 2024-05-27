@@ -43,4 +43,18 @@ public class Aviation_Test implements Registrable {
         }
         return res;
     }
+    public static String[] obtenerComponentes(){
+        return new String[]{
+                "JTextField", "JTextField", "JTextField"
+        };
+    }
+    public static String[] obtenerTipoDato(){
+        return new String[]{"int", "VARCHAR", "short"};
+    }
+    public static boolean[] obtenerNoNulos(){
+        return new boolean[]{true, true, true};
+    }
+    public static int[] obtenerLongitudes(){
+        return new int[]{-1, 20, -1};
+    }
 }
