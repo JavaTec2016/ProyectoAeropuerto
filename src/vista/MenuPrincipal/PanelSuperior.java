@@ -1,16 +1,17 @@
 package vista.MenuPrincipal;
 
 import modelo.Registrable;
-import vista.PanelRasLayout;
-import vista.Panelo;
-import vista.Wrap;
-import vista.lblFont;
+import vista.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+
+import static controlador.DAO.d;
 
 public class PanelSuperior extends Panelo {
     JFrame vn;
@@ -101,6 +102,19 @@ public class PanelSuperior extends Panelo {
         salida.add(wbtnBajas);
         salida.add(wbtnCambios);
         salida.add(wbtnConsultas);
+
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PanelLateral p = ((PanelLateral)lateral);
+                if(p.btnActual == null) {
+                    JOptionPane.showMessageDialog(vn, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
+                    return;
+                };
+                ((VentanaPrincipal)vn).setRegistros();
+
+            }
+        });
 
         addComponentListener(new ComponentAdapter() {
             @Override

@@ -1,5 +1,6 @@
 package vista;
 
+import modelo.Registrable;
 import vista.Altas.altasAirplane;
 import vista.Altas.altasEmployee;
 import vista.Altas.altasExpertises;
@@ -16,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import static controlador.DAO.d;
 
 public class VentanaPrincipal extends JFrame {
     RasLayout ras;
@@ -256,6 +259,14 @@ public class VentanaPrincipal extends JFrame {
             in.addComponentListener(ca);
         }
 
+    }
+    public void setRegistros(){
+        if(barraTablas.btnActual == null){
+            JOptionPane.showMessageDialog(this, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList rs = d.consultarUniversal(barraTablas.obtenerTabla());
+        panelTabla.agregarRegistros(rs);
     }
     public boolean identificarError(int err){
 

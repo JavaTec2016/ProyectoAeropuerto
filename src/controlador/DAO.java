@@ -3,7 +3,11 @@ package controlador;
 import conexionBD.ConexionBD;
 import modelo.*;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DAO {
@@ -61,6 +65,7 @@ public class DAO {
         int corte = sql.length()-2;
         sql = sql.substring(0, corte)+")";
         System.out.println(sql);
+        conexion.ejecutarInstruccionDML(sql);
         //nuestra sentencia esta lista, le falta una BD
         //conexion.ejecutarInstruccionDML(sql);
         return 0;
@@ -139,6 +144,60 @@ public class DAO {
         //conexion.ejecutarInstruccionDML(sql);
         return 0;
 
+    }
+    public ArrayList<Registrable> consultarUniversal(String tabla){
+        ArrayList<Registrable> registros = new ArrayList<Registrable>();
+
+        String sql = "SELECT * FROM " + tabla;
+
+        ResultSet rs = conexion.ejecutarConsultaSQL(sql);
+        //argumentos para el registrable;
+        Object[] args;
+        int i = 0;
+        try {
+            //saber que clase es
+            Class<?> modelo = Class.forName("modelo."+tabla);
+
+
+            //saber que constructor tiene la clase
+            Constructor<?> cons = modelo.getConstructors()[0];
+
+            //iniciar un objeto con espacios segun la cantidad de parametros
+            args = new Object[cons.getParameterCount()];
+
+            rs.next();
+            do{
+                for(int j = 0; j < args.length; j++){
+                    //rellenar los argumentos
+                    args[j] = rs.getObject(j+1);
+                }
+                for (Object arg : args) {
+                    System.out.println(arg);
+                }
+                //inicializar el objeto como registrable
+                Registrable o = (Registrable) cons.newInstance(args);
+                //y agregarlo al output
+                registros.add(o);
+
+            }while (rs.next());
+
+        } catch (SQLException e) {
+            System.out.println("Error en consulta SQL");
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println("modelo."+tabla+" no existe");
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            System.out.println("Error al invocar el constructor de modelo."+tabla);
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            System.out.println("modelo."+tabla+" no puede ser instanciado");
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            System.out.println("modelo."+tabla+" no puede ser accesado");
+            throw new RuntimeException(e);
+        }
+        return registros;
     }
     public static void main(String[] args) {
         DAO d = new DAO();

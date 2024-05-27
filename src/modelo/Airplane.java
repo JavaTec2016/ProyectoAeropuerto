@@ -2,11 +2,11 @@ package modelo;
 
 public class Airplane extends ModeloBD{
 
-
+    int Registration_Number;
     String Model_Number;
     //int Capacity;
     //int Weight;
-    int Registration_Number;
+
 
     public Airplane(String model_Number, int registration_Number) {
         Registration_Number = registration_Number;

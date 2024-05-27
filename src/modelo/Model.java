@@ -2,7 +2,7 @@ package modelo;
 
 import java.lang.reflect.Field;
 
-public class Model implements Registrable {
+public class Model extends ModeloBD {
     String Model_Number;
     int Capacity;
     int Weight;
@@ -32,6 +32,8 @@ public class Model implements Registrable {
         }
         return res;
     }
+
+
     public String[] tipoDatos(){
         Field[] fld = getClass().getDeclaredFields();
         String[] res = new String[fld.length];

@@ -16,7 +16,7 @@ public class ConexionBD {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             //usar la BD correcta
-            String URL = "jdbc:mysql://localhost:3306/BD_Escuela_Topicos_2024";
+            String URL = "jdbc:mysql://localhost:3306/Aeropuerto";
 
             conexion = DriverManager.getConnection(URL, "root", "chinga tu madre");
 

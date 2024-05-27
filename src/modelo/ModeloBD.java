@@ -24,5 +24,30 @@ public class ModeloBD implements Registrable {
         }
         return res;
     }
+    public Object[] obtenerValores(){
+        //obtiene los campos a capturar y prepara el output
+        String[] campos = propiedades();
+        Object[] res = new Object[campos.length];
 
+        for(int i = 0; i < campos.length; i++){
+            String campo = campos[i];
+            try {
+                //toma el campo y busca su valor para este objeto
+
+                Field f = this.getClass().getDeclaredField(campo);
+                f.setAccessible(true);
+                //guardalo en el output
+                res[i] = f.get(this);
+
+            } catch (NoSuchFieldException e) {
+                System.out.println(campo+ " > El campo que se busca no existe. ");
+                return null;
+            } catch (IllegalAccessException e) {
+                System.out.println(campo+ " > El campo no es accesible. ");
+                return null;
+            }
+        }
+        //retorna los valores del objeto
+        return res;
+    }
 }

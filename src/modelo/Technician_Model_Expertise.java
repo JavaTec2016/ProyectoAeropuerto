@@ -2,7 +2,7 @@ package modelo;
 
 import java.lang.reflect.Field;
 
-public class Technician_Model_Expertise implements Registrable {
+public class Technician_Model_Expertise extends ModeloBD {
     String SSN;
     String Model_Number;
 

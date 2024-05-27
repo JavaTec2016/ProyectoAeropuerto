@@ -2,7 +2,7 @@ package modelo;
 
 import java.lang.reflect.Field;
 
-public class Airplane_Technician_Test implements Registrable {
+public class Airplane_Technician_Test extends ModeloBD {
     String SSN;
     int Number_FAA;
     int Registration_Number;

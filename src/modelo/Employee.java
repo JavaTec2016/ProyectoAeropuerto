@@ -3,7 +3,7 @@ package modelo;
 import java.lang.reflect.Field;
 import java.sql.Statement;
 
-public class Employee implements Registrable {
+public class Employee extends ModeloBD {
     String SSN;
     String First_Name;
     String Last_Name;

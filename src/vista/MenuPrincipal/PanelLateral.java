@@ -12,6 +12,8 @@ import java.awt.event.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import static controlador.DAO.d;
+
 public class PanelLateral extends Panelo {
     public JButton btnAirplanes, btnAirplaneTests, btnAviationTests, btnEmployees, btnModels, btnExpertises, btnTrafficController,
         btnActual;
@@ -92,13 +94,6 @@ public class PanelLateral extends Panelo {
                     if(btnActual != null && btnActual != accioner) btnActual.setBackground(panelColor);
                     btnActual = accioner;
 
-                    if(accioner == btnAirplanes){
-                        String[] s = {"a","b","c"};
-                        vn.prepararTabla(s);
-                    }else if(accioner == btnAirplaneTests){
-                        String[] s = {"a","b","c","d","e"};
-                        vn.prepararTabla(s);
-                    }
                     //cambios al panel superior
                     //obtener la clase del modelo relacionado al boton
                     try {
@@ -135,5 +130,8 @@ public class PanelLateral extends Panelo {
                 PanelRasLayout.refrescar(salida, ras);
             }
         });
+    }
+    public String obtenerTabla(){
+        return btnActual.getName();
     }
 }

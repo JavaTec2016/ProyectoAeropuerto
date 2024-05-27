@@ -3,7 +3,7 @@ package modelo;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-public class Aviation_Test implements Registrable {
+public class Aviation_Test extends ModeloBD {
     int Number_FAA;
     String Name;
     byte Max_Score;

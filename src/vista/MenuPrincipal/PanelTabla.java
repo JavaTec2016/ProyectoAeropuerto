@@ -1,5 +1,6 @@
 package vista.MenuPrincipal;
 
+import modelo.Registrable;
 import vista.PanelRasLayout;
 import vista.Panelo;
 import vista.Wrap;
@@ -63,5 +64,15 @@ public class PanelTabla extends Panelo {
         tablaUniversal = new JTable(model);
         scroller.setViewportView(tablaUniversal);
         scroller.setVisible(true);
+    }
+
+    public void agregarRegistro(Registrable r){
+        Object[] datos = r.obtenerValores();
+        model.addRow(datos);
+    }
+    public void agregarRegistros(ArrayList<Registrable> rs){
+        for (Registrable r : rs) {
+            agregarRegistro(r);
+        }
     }
 }
