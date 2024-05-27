@@ -1,8 +1,6 @@
 package vista.Altas;
 
-import modelo.Employee;
-import modelo.Model;
-import modelo.ModeloBD;
+import modelo.Technician_Model_Expertise;
 import vista.*;
 
 import javax.swing.*;
@@ -14,7 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
-public class altasEmployee extends Ventana {
+public class altasExpertises extends Ventana {
     Panelo panelAgregar;
     lblFont lblAgregar;
 
@@ -26,11 +24,11 @@ public class altasEmployee extends Ventana {
     int celh = 20;
     Ventana ref;
 
-    public altasEmployee(){
+    public altasExpertises() {
         ref = this;
         w = 900;
-        h = 800;
-        title = "Agregar Empleado";
+        h = 400;
+        title = "Agregar Experiencia de Tecnico";
         ras = new InternalRasLayout(this, title, w, h);
         salida = new ArrayList<Wrap>();
         ras.cw = celw;
@@ -41,7 +39,7 @@ public class altasEmployee extends Ventana {
         setMaximizable(false);
 
 
-        lblAgregar = new lblFont("DATOS DEL EMPLEADO", "Arial", Font.BOLD, 30, 0,0,0);
+        lblAgregar = new lblFont("DATOS DE EXPERIENCIA", "Arial", Font.BOLD, 30, 0,0,0);
         panelAgregar = new Panelo();
         panelAgregar.w = w;
         panelAgregar.h = h/10;
@@ -53,12 +51,12 @@ public class altasEmployee extends Ventana {
 
         //generacion automatica del formulario
 
-        String[] lbls = Employee.obtenerLabels();
-        String[] cps = Employee.obtenerComponentes();
+        String[] lbls = Technician_Model_Expertise.obtenerLabels();
+        String[] cps = Technician_Model_Expertise.obtenerComponentes();
 
-        String[] tipos = Employee.obtenerTipoDato();
-        int[] lgs = Employee.obtenerLongitudes();
-        boolean[] noNulos = Employee.obtenerNoNulos();
+        String[] tipos = Technician_Model_Expertise.obtenerTipoDato();
+        int[] lgs = Technician_Model_Expertise.obtenerLongitudes();
+        boolean[] noNulos = Technician_Model_Expertise.obtenerNoNulos();
 
         System.out.println("obtenidos " + lbls.length + " labels");
         System.out.println("obtenidos " + cps.length + " componentes");
@@ -67,11 +65,12 @@ public class altasEmployee extends Ventana {
         int i = 0,  yi = (int)(celh/h*0.5), xi = 4;
         int lblWidth = 13, lblHeight = 2;
         int txtWidth = 9, txtHeight = 2;
+        int txtSeparation = 3;
 
-        int totalHeight = lblHeight*lbls.length; //celdas totales abarcadas por el formulario
+        int totalHeight = txtSeparation*lbls.length; //celdas totales abarcadas por el formulario
 
         System.out.println("altura de formulario " + totalHeight + "\naltura de pantalla"+ (h/celh));
-        int halfDiff = (h/celh - totalHeight)/2/celh + (panelAgregar.h/celh/2); //margen para centrar el formulario
+        int halfDiff = (h/celh - totalHeight)/3;// + (panelAgregar.h/celh/2); //margen para centrar el formulario
 
         System.out.println("margen vertical de " + halfDiff + "celdas");
 
@@ -83,14 +82,14 @@ public class altasEmployee extends Ventana {
                 ((JComboBox<String>) inputs[i]).addItem("Traffic Controller");
             }
             //agregar al ras
-            salida.add(ras.encuadrarRelativo(inputs[i], xi+lblWidth+2, halfDiff+(txtHeight+1)*(i+1), txtWidth, txtHeight));
+            salida.add(ras.encuadrarRelativo(inputs[i], xi+lblWidth+2, halfDiff+(txtSeparation)*(i+1), txtWidth, txtHeight));
             i++;
         }
 
         i = 0;
         for(String label : lbls){
             lblFont f = new lblFont("Ingrese el " + label, "Arial", Font.PLAIN, 15,0,0, 0);
-            salida.add(ras.encuadrarRelativo(f, xi, halfDiff+(txtHeight+1)*(i+1), lblWidth, lblHeight));
+            salida.add(ras.encuadrarRelativo(f, xi, halfDiff+txtSeparation*(i+1), lblWidth, lblHeight));
             i++;
         }
         Wrap wPanel = new Wrap(panelAgregar);
@@ -101,10 +100,10 @@ public class altasEmployee extends Ventana {
         btnValidar = new JButton("AGREGAR");
 
         ras.agregarRelativo(wPanel, panelAgregar.x, panelAgregar.y, panelAgregar.w, panelAgregar.h);
-        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+27, (int) (halfDiff+(txtHeight+1)*(i+1)*0.25), 10,2);
+        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+27, (int) (halfDiff+txtSeparation*(i+1)*0.1), 10,2);
 
-        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+26, (int)(halfDiff+(txtHeight+1)*(i+1)*0.5), 12, 2);
-        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+26, (int)(halfDiff+(txtHeight+1)*(i+1)*0.75), 12,2);
+        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+26, (int)(halfDiff+txtSeparation*(i+1)*0.45), 12, 2);
+        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+26, (int)(halfDiff+txtSeparation*(i+1)*0.9), 12,2);
 
 
         wBtnValidar.centerOffset(1,1);
@@ -153,9 +152,9 @@ public class altasEmployee extends Ventana {
                     j++;
                 }
 
-                Employee emp = new Employee(inps[0], inps[1], inps[2], inps[3], inps[4], inps[5], inps[6], Integer.parseInt(inps[7]), Double.parseDouble(inps[8]), inps[9]);
+                Technician_Model_Expertise tme = new Technician_Model_Expertise(inps[0], inps[1]);
 
-                dao.agregarUniversal(emp);
+                dao.agregarUniversal(tme);
             }
         });
 
