@@ -65,10 +65,10 @@ public class DAO {
         int corte = sql.length()-2;
         sql = sql.substring(0, corte)+")";
         System.out.println(sql);
-        conexion.ejecutarInstruccionDML(sql);
+        if(conexion.ejecutarInstruccionDML(sql)) return 0;
         //nuestra sentencia esta lista, le falta una BD
         //conexion.ejecutarInstruccionDML(sql);
-        return 0;
+        return 3;
     }
     //recibe una cantidad cualquiera de filtros con datos obtenidos y formateados desde la interfaz
     //por lo que no es necesario hacer cochinadas con clases
@@ -210,6 +210,6 @@ public class DAO {
 
         d.actualizarUniversal(new Model("DC-10", 30, 172), "Model_Number='DC-10'");
 
-        d.agregarUniversal(new Airplane("DC-10", 12345));
+        d.agregarUniversal(new Airplane(12345, "DC-10"));
     }
 }

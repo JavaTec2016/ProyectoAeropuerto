@@ -1,10 +1,8 @@
 package vista;
 
+import modelo.Employee;
 import modelo.Registrable;
-import vista.Altas.altasAirplane;
-import vista.Altas.altasEmployee;
-import vista.Altas.altasExpertises;
-import vista.Altas.altasModel;
+import vista.Altas.*;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
 import vista.MenuPrincipal.PanelTabla;
@@ -195,10 +193,9 @@ public class VentanaPrincipal extends JFrame {
                 }else if(barraTablas.btnActual == barraTablas.btnExpertises){
                     v = new altasExpertises();
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
-
-                }
-                else if(barraTablas.btnActual == barraTablas.btnAviationTests){
-
+                    v = new AltasAirplane_Technician_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
+                    v = new AltasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
 
                 }
@@ -230,7 +227,22 @@ public class VentanaPrincipal extends JFrame {
     public void prepararTabla(String[] tuplas){
         panelTabla.prepararTabla(tuplas);
     }
+    public static byte n(){
+        return (byte)(Math.random()*10);
+    }
     public static void main(String[] args) {
+        /**
+         *for(int i = 0; i < 20; i++){
+         *             String n = "";
+         *             while (n.length() < 20) n += n();
+         *             Employee e = new Employee(
+         *                     n, "Jua"+i, "Nin"+i, "st"+i,  "city"+i, ""+(int)(Math.random()*Math.pow(10,5)), ""+(int)(Math.random()*Math.pow(10,10)),
+         *                     (int)(Math.random()*Math.pow(10,10)), (int)(Math.random()*Math.pow(10,6)), "Technician");
+         *
+         *             d.agregarUniversal(e);
+         *         }
+         */
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

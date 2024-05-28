@@ -124,11 +124,13 @@ public class altasAirplane extends Ventana{
 
                     int reg = Integer.parseInt(txtRegistrationNumber.getText());
 
-                    Airplane m = new Airplane(txtModelNumber.getText(), reg);
+                    Airplane m = new Airplane(reg, txtModelNumber.getText());
 
                     //cosas de DAO y sql
-                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Agregado", JOptionPane.INFORMATION_MESSAGE);
-                    dao.agregarUniversal(m);
+                    byte codigo = dao.agregarUniversal(m);
+                    if(codigo == 0) JOptionPane.showMessageDialog(ref, "Operacion exitosa ("+codigo+")", "Agregado", JOptionPane.INFORMATION_MESSAGE);
+                    if(codigo == 3) JOptionPane.showMessageDialog(ref, "El registro no se pudo agregar, verifique los datos", "Error de datos", JOptionPane.ERROR_MESSAGE);
+
 
                 }catch (NumberFormatException exc){
                     JOptionPane.showMessageDialog(ref, "Formato de numero de registro incorrecto", "Error", JOptionPane.ERROR_MESSAGE);

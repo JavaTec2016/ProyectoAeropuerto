@@ -11,7 +11,6 @@ public class Airplane_Technician_Test extends ModeloBD {
     short Hours_Spent;
     short Score_Recieved;
 
-    public Airplane_Technician_Test(){}
     public Airplane_Technician_Test(String SSN, String model_Number, int registration_Number, int number_FAA, String test_Begin, short hours_Spent, short score_Recieved) {
         this.SSN = SSN;
         Model_Number = model_Number;
@@ -21,6 +20,7 @@ public class Airplane_Technician_Test extends ModeloBD {
         Hours_Spent = hours_Spent;
         Score_Recieved = score_Recieved;
     }
+    public Airplane_Technician_Test(){}
     public String[] propiedades(){
         Field[] fld = getClass().getDeclaredFields();
         String[] res = new String[fld.length];
@@ -48,7 +48,7 @@ public class Airplane_Technician_Test extends ModeloBD {
     }
     public static String[] obtenerComponentes(){
         return new String[]{
-                "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField"
+                "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField", "JTextField"
         };
     }
     public static String[] obtenerTipoDato(){

@@ -8,7 +8,7 @@ public class Airplane extends ModeloBD{
     //int Weight;
 
 
-    public Airplane(String model_Number, int registration_Number) {
+    public Airplane(int registration_Number, String model_Number) {
         Registration_Number = registration_Number;
         Model_Number = model_Number;
     }
@@ -29,7 +29,7 @@ public class Airplane extends ModeloBD{
         return new String[]{"Numero de modelo", "Numero de registro"};
     }
     public static String[] obtenerTipoDato(){
-        return new String[]{"CHAR", "int"};
+        return new String[]{"int", "CHAR"};
     }
 
     public static boolean[] obtenerNoNulos(){
@@ -37,6 +37,6 @@ public class Airplane extends ModeloBD{
     }
     //-1 no revisa
     public static int[] obtenerLongitudes(){
-        return new int[]{5, -1};
+        return new int[]{-1, 5};
     }
 }

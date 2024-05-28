@@ -71,6 +71,8 @@ public class PanelTabla extends Panelo {
         model.addRow(datos);
     }
     public void agregarRegistros(ArrayList<Registrable> rs){
+        //int i = model.getRowCount();
+        while (model.getRowCount() > 0) model.removeRow(0);
         for (Registrable r : rs) {
             agregarRegistro(r);
         }

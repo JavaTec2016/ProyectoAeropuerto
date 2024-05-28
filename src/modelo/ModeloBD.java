@@ -24,6 +24,12 @@ public class ModeloBD implements Registrable {
         }
         return res;
     }
+    public static String[] obtenerLabels(){return null;}
+    public static String[] obtenerComponentes(){return null;}
+    public static String[] obtenerTipoDato(){return null;}
+    public static boolean[] obtenerNoNulos(){return null;}
+    public static int[] obtenerLongitudes(){return null;}
+
     public Object[] obtenerValores(){
         //obtiene los campos a capturar y prepara el output
         String[] campos = propiedades();
