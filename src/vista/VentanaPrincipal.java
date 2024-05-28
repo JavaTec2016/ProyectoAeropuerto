@@ -3,6 +3,7 @@ package vista;
 import modelo.Employee;
 import modelo.Registrable;
 import vista.Altas.*;
+import vista.Bajas.bajasAirplane;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
 import vista.MenuPrincipal.PanelTabla;
@@ -90,11 +91,22 @@ public class VentanaPrincipal extends JFrame {
         //INICIALIZACION DE PANTALLAS ABCC
 
         ventanaAltas = new VentanaLogin();
+        ventanaBajas = new VentanaLogin();
+
         Wrap wk = new Wrap(ventanaAltas);
+        wBajas = new Wrap(ventanaBajas);
+
         wk.resize = false;
+        wBajas.resize = false;
+
         ras.agregarRelativo(wk, 0,0,600,600);
+        ras.agregarRelativo(wBajas, 0,0,600,600);
+
         remove(ventanaAltas);
+        remove(ventanaBajas);
+
         desk.add(ventanaAltas);
+        desk.add(ventanaBajas);
 
         panelFondo.setBackground(new Color(100, 100, 100));
         panelFondo.setForeground(new Color(255,255,255));
@@ -143,6 +155,7 @@ public class VentanaPrincipal extends JFrame {
 
         //desk.add(ventanaAltas);
         partes.add(wAltas);
+        partes.add(wBajas);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -197,7 +210,7 @@ public class VentanaPrincipal extends JFrame {
                 }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
                     v = new AltasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
-
+                    v = new AltasTraffic_Controller();
                 }
 
                 ventanaAltas = v;
@@ -221,6 +234,55 @@ public class VentanaPrincipal extends JFrame {
                 });
                 ventanaAltas.setEnabled(true);
                 ventanaAltas.setVisible(true);
+            }
+        });
+        barraOpciones.btnBajas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(barraTablas.btnActual == null){
+                    JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Eliminar registro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                desk.setVisible(true);
+                desk.removeAll();
+                Ventana v = new altasModel();
+
+                if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    v = new bajasAirplane();
+                }else if(barraTablas.btnActual == barraTablas.btnEmployees){
+                    //v = new altasEmployee();
+                }else if(barraTablas.btnActual == barraTablas.btnExpertises){
+                    //v = new altasExpertises();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
+                    //v = new AltasAirplane_Technician_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
+                    //v = new AltasAviation_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
+                    //v = new AltasTraffic_Controller();
+                }
+
+                ventanaBajas = v;
+                ras.prepararRelativo(wAltas, 0, 0, ventanaBajas.w, ventanaBajas.h);
+                wBajas.centerOffset(0,0);
+                ras.actualizarRelativo(wBajas);
+
+                desk.setBounds(ventanaBajas.getBounds());
+                ras.prepararRelativo(wDesk, getWidth()/2, getHeight()/2, desk.getWidth(), desk.getHeight());
+                wDesk.centerOffset(1,1);
+
+                wAltas.posicionarRelativo(ref);
+                wDesk.posicionarRelativo(ref);
+
+                desk.add(ventanaBajas);
+                ventanaBajas.addInternalFrameListener(new InternalFrameAdapter() {
+                    @Override
+                    public void internalFrameClosing(InternalFrameEvent e) {
+                        desk.setVisible(false);
+                    }
+                });
+                //ventanaAltas.setEnabled(true);
+                //ventanaAltas.setVisible(true);
             }
         });
     }

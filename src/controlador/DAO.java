@@ -73,13 +73,13 @@ public class DAO {
     //recibe una cantidad cualquiera de filtros con datos obtenidos y formateados desde la interfaz
     //por lo que no es necesario hacer cochinadas con clases
     public boolean EliminarUniversal(String tabla, String ...filtros){
-        String sql = "DELETE FROM " + tabla + " ";
+        String sql = "DELETE FROM " + tabla + " WHERE ";
         for(String filtro : filtros){
             sql += filtro+", ";
         }
         //sobran un punto y espacio, arreglarlo
         int corte = sql.length()-2;
-        sql = sql.substring(0, corte)+")";
+        sql = sql.substring(0, corte);
         System.out.println(sql);
 
         return conexion.ejecutarInstruccionDML(sql);
@@ -169,10 +169,22 @@ public class DAO {
             do{
                 for(int j = 0; j < args.length; j++){
                     //rellenar los argumentos
+
                     args[j] = rs.getObject(j+1);
+
+                    //resulta que si le metes un date a un constructor con strings truena
+                    if(rs.getObject(j+1).getClass().getName().equals("java.sql.Date")){
+
+                        args[j] = rs.getObject(j+1).toString();
+                    }
                 }
                 for (Object arg : args) {
-                    System.out.println(arg);
+                    //System.out.println(arg);
+                }
+                //System.out.println("Agregando a: " + modelo.getName());
+                for(int i2 = 0; i2 < cons.getParameterCount(); i2++){
+                    //System.out.println("Parametro: " + cons.getGenericParameterTypes()[i2]);
+                    //System.out.println("Argumento: " + args[i].getClass().getName());
                 }
                 //inicializar el objeto como registrable
                 Registrable o = (Registrable) cons.newInstance(args);

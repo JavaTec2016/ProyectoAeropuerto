@@ -1,7 +1,7 @@
 package vista.Altas;
 
-import modelo.Airplane_Technician_Test;
 import modelo.Aviation_Test;
+import modelo.Traffic_Controller;
 import vista.InternalRasLayout;
 import vista.Ventana;
 import vista.Wrap;
@@ -11,16 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AltasAviation_Test extends Ventana {
-    AltasAviation_Test ref;
-
-    public AltasAviation_Test() {
+public class AltasTraffic_Controller extends Ventana {
+    AltasTraffic_Controller ref;
+    public AltasTraffic_Controller(){
         ref = this;
         w = 900;
-        h = 600;
+        h = 350;
         celh = 20;
         celw = 20;
-        title = "Agregar Tipo de Prueba";
+        title = "Agregar Examen de Controlador de trafico";
         ras = new InternalRasLayout(this, title, w, h);
         salida = new ArrayList<Wrap>();
         ras.cw = celw;
@@ -30,15 +29,15 @@ public class AltasAviation_Test extends Ventana {
         setIconifiable(false);
         setMaximizable(false);
 
-        String[] lbls = Aviation_Test.obtenerLabels();
-        String[] cps = Aviation_Test.obtenerComponentes();
+        String[] lbls = Traffic_Controller.obtenerLabels();
+        String[] cps = Traffic_Controller.obtenerComponentes();
 
-        String[] tipos = Aviation_Test.obtenerTipoDato();
-        int[] lgs = Aviation_Test.obtenerLongitudes();
-        boolean[] noNulos = Aviation_Test.obtenerNoNulos();
+        String[] tipos = Traffic_Controller.obtenerTipoDato();
+        int[] lgs = Traffic_Controller.obtenerLongitudes();
+        boolean[] noNulos = Traffic_Controller.obtenerNoNulos();
 
 
-        autoGenerar("AGREGAR TIPO DE PRUEBA", h/10, lbls, cps, tipos, lgs, noNulos, 1);
+        autoGenerar("AGREGAR EXAMEN DE CONTROLADOR DE TRAFICO", h/8, lbls, cps, tipos, lgs, noNulos, 2);
 
         btnValidar.addActionListener(new ActionListener() {
             @Override
@@ -48,9 +47,9 @@ public class AltasAviation_Test extends Ventana {
 
                     return;
                 }
-                Aviation_Test att = new Aviation_Test(Integer.parseInt(inps[0]), inps[1], Byte.parseByte(inps[2]));
+                Traffic_Controller att = new Traffic_Controller(inps[0].toString(), inps[1].toString());
                 if( dao.agregarUniversal(att) != 0){
-                    JOptionPane.showMessageDialog(ref, "Error en los datos, verifique las experiencias", "Error de datos", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(ref, "Error en los datos ingresados", "Error de datos", JOptionPane.ERROR_MESSAGE);
                 }else {
                     JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Nuevo registro", JOptionPane.INFORMATION_MESSAGE);
                 }

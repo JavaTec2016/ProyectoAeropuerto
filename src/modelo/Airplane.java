@@ -12,7 +12,7 @@ public class Airplane extends ModeloBD{
         Registration_Number = registration_Number;
         Model_Number = model_Number;
     }
-
+    public Airplane(){};
     @Override
     public String toString() {
         return "Airplane{" +

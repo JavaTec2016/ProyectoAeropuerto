@@ -4,10 +4,9 @@ public class Traffic_Controller extends ModeloBD{
     String SSN;
     String Last_Exam;
 
-
-    public Traffic_Controller(String SSN, String last_Exam) {
+    public Traffic_Controller(String sSN, String last_Exam) {
+        SSN = sSN;
         Last_Exam = last_Exam;
-        this.SSN = SSN;
     }
 
     @Override

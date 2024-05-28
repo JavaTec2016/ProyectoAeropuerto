@@ -16,7 +16,7 @@ public class AltasAirplane_Technician_Test extends Ventana {
     public AltasAirplane_Technician_Test() {
         ref = this;
         w = 900;
-        h = 800;
+        h = 600;
         celh = 20;
         celw = 20;
         title = "Agregar Prueba";
@@ -37,7 +37,7 @@ public class AltasAirplane_Technician_Test extends Ventana {
         boolean[] noNulos = Airplane_Technician_Test.obtenerNoNulos();
 
 
-        autoGenerar("AGREGAR PRUEBA", h/10, lbls, cps, tipos, lgs, noNulos);
+        autoGenerar("AGREGAR PRUEBA", h/10, lbls, cps, tipos, lgs, noNulos, 1);
 
         btnValidar.addActionListener(new ActionListener() {
             @Override
@@ -50,6 +50,8 @@ public class AltasAirplane_Technician_Test extends Ventana {
                 Airplane_Technician_Test att = new Airplane_Technician_Test(inps[0], inps[1], Integer.parseInt(inps[2]), Integer.parseInt(inps[3]), inps[4], Short.parseShort(inps[5]), Short.parseShort(inps[5]));
                 if( dao.agregarUniversal(att) != 0){
                     JOptionPane.showMessageDialog(ref, "Error en los datos, verifique las experiencias", "Error de datos", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Nuevo registro", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
