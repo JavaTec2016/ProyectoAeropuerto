@@ -4,6 +4,8 @@ import modelo.Employee;
 import modelo.Registrable;
 import vista.Altas.*;
 import vista.Bajas.bajasAirplane;
+import vista.Bajas.bajasEmployee;
+import vista.Bajas.bajasModel;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
 import vista.MenuPrincipal.PanelTabla;
@@ -246,12 +248,12 @@ public class VentanaPrincipal extends JFrame {
 
                 desk.setVisible(true);
                 desk.removeAll();
-                Ventana v = new altasModel();
+                Ventana v = new bajasModel();
 
                 if(barraTablas.btnActual == barraTablas.btnAirplanes){
                     v = new bajasAirplane();
                 }else if(barraTablas.btnActual == barraTablas.btnEmployees){
-                    //v = new altasEmployee();
+                    v = new bajasEmployee();
                 }else if(barraTablas.btnActual == barraTablas.btnExpertises){
                     //v = new altasExpertises();
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){

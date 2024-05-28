@@ -6,9 +6,9 @@ import java.util.Arrays;
 public class Aviation_Test extends ModeloBD {
     int Number_FAA;
     String Name;
-    byte Max_Score;
+    int Max_Score;
 
-    public Aviation_Test(int nf,String n, byte ms){
+    public Aviation_Test(int nf,String n, int ms){
         Number_FAA = nf;
         Name = n;
         Max_Score = ms;
@@ -54,7 +54,7 @@ public class Aviation_Test extends ModeloBD {
         };
     }
     public static String[] obtenerTipoDato(){
-        return new String[]{"int", "VARCHAR", "short"};
+        return new String[]{"int", "VARCHAR", "int"};
     }
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, true};

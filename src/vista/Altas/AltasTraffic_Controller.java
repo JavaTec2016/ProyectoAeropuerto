@@ -36,7 +36,7 @@ public class AltasTraffic_Controller extends Ventana {
         int[] lgs = Traffic_Controller.obtenerLongitudes();
         boolean[] noNulos = Traffic_Controller.obtenerNoNulos();
 
-
+        btnAccion = "AGREGAR";
         autoGenerar("AGREGAR EXAMEN DE CONTROLADOR DE TRAFICO", h/8, lbls, cps, tipos, lgs, noNulos, 2);
 
         btnValidar.addActionListener(new ActionListener() {

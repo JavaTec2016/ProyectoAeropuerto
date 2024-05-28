@@ -27,7 +27,7 @@ public class Employee extends ModeloBD {
         Salary = salary;
         Charge = charge;
     }
-
+    public Employee(){};
     @Override
     public String toString() {
         return "Employee{" +

@@ -36,7 +36,7 @@ public class AltasAirplane_Technician_Test extends Ventana {
         int[] lgs = Airplane_Technician_Test.obtenerLongitudes();
         boolean[] noNulos = Airplane_Technician_Test.obtenerNoNulos();
 
-
+        btnAccion = "AGREGAR";
         autoGenerar("AGREGAR PRUEBA", h/10, lbls, cps, tipos, lgs, noNulos, 1);
 
         btnValidar.addActionListener(new ActionListener() {

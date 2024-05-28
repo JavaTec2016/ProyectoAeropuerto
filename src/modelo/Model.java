@@ -12,7 +12,7 @@ public class Model extends ModeloBD {
         Capacity = capacity;
         Weight = weight;
     }
-
+    public Model(){};
     @Override
     public String toString() {
         return "Model{" +
