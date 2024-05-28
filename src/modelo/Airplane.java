@@ -26,7 +26,7 @@ public class Airplane extends ModeloBD{
         };
     }
     public static String[] obtenerLabels(){
-        return new String[]{"Numero de modelo", "Numero de registro"};
+        return new String[]{"Numero de registro", "Numero de modelo"};
     }
     public static String[] obtenerTipoDato(){
         return new String[]{"int", "CHAR"};

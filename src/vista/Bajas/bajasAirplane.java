@@ -48,11 +48,8 @@ public class bajasAirplane extends Ventana {
                 if(inps == null) return;
                 String valor = inps[0];
                 if(tipo[0].equals("CHAR") || tipo[0].equals("VARCHAR")) valor = "'"+inps[0]+"'";
-                if(dao.EliminarUniversal("Airplane", campo+"="+valor)){
-                    JOptionPane.showMessageDialog(ref, "Eliminacion exitosa", "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(ref, "Error en la ID", "No encontrado", JOptionPane.ERROR_MESSAGE);
-                };
+                int codigo = dao.EliminarUniversal("Airplane", campo+"="+valor);
+                notificarSQL(codigo, "Eliminacion exitosa", "Registro duplicado", "Este avion es utilizado en otros registros", "Registro eliminado");
             }
         });
 

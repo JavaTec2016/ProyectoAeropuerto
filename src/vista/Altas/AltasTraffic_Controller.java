@@ -48,11 +48,8 @@ public class AltasTraffic_Controller extends Ventana {
                     return;
                 }
                 Traffic_Controller att = new Traffic_Controller(inps[0].toString(), inps[1].toString());
-                if( dao.agregarUniversal(att) != 0){
-                    JOptionPane.showMessageDialog(ref, "Error en los datos ingresados", "Error de datos", JOptionPane.ERROR_MESSAGE);
-                }else {
-                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Nuevo registro", JOptionPane.INFORMATION_MESSAGE);
-                }
+                int codigo = dao.agregarUniversal(att);
+                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "El SSN de empleado es incorrecto", "Registro agregadp");
             }
         });
     }

@@ -138,8 +138,8 @@ public class altasModel extends Ventana {
                     Model m = new Model(txtModelNumber.getText(), cap, weight);
 
                     //cosas de DAO y sql
-                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Agregado", JOptionPane.INFORMATION_MESSAGE);
-                    dao.agregarUniversal(m);
+                    int codigo = dao.agregarUniversal(m);
+                    notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "Error de relacion", "Registro agregado");
 
                 }catch (NumberFormatException exc){
                     if(ccap) JOptionPane.showMessageDialog(ref, "Formato del peso incorrecto", "Error", JOptionPane.ERROR_MESSAGE);

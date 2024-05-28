@@ -14,6 +14,8 @@ public class Aviation_Test extends ModeloBD {
         Max_Score = ms;
     }
 
+    public Aviation_Test(){};
+
     @Override
     public String toString() {
         return "Aviation_Test{" +

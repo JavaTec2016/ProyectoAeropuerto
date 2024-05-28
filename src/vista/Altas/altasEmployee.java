@@ -155,9 +155,10 @@ public class altasEmployee extends Ventana {
 
                 Employee emp = new Employee(inps[0], inps[1], inps[2], inps[3], inps[4], inps[5], inps[6], Integer.parseInt(inps[7]), Double.parseDouble(inps[8]), inps[9]);
 
-                dao.agregarUniversal(emp);
+                int codigo = dao.agregarUniversal(emp);
+                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "Error de relacion", "Registro agregado");
             }
-        });
+    });
 
         panelAgregar.addComponentListener(new ComponentAdapter() {
             @Override

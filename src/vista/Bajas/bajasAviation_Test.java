@@ -1,7 +1,7 @@
 package vista.Bajas;
 
 import modelo.Airplane;
-import modelo.Model;
+import modelo.Aviation_Test;
 import vista.InternalRasLayout;
 import vista.Ventana;
 import vista.Wrap;
@@ -12,9 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class bajasModel extends Ventana {
+public class bajasAviation_Test extends Ventana {
 
-    public bajasModel(){
+    public bajasAviation_Test(){
         ref = this;
         celh = 20;
         celw = 20;
@@ -30,27 +30,27 @@ public class bajasModel extends Ventana {
         setIconifiable(false);
         setMaximizable(false);
 
-        String[] lbl = {Model.obtenerLabels()[0]};
-        String[] cps = {Model.obtenerComponentes()[0]};
 
-        String[] tipo = {Model.obtenerTipoDato()[0]};
-        int[] lgs = {Model.obtenerLongitudes()[0]};
-        boolean[] nnl = {Model.obtenerNoNulos()[0]};
+        String[] lbl = {Aviation_Test.obtenerLabels()[0]};
+        String[] cps = {Aviation_Test.obtenerComponentes()[0]};
+
+        String[] tipo = {Aviation_Test.obtenerTipoDato()[0]};
+        int[] lgs = {Aviation_Test.obtenerLongitudes()[0]};
+        boolean[] nnl = {Aviation_Test.obtenerNoNulos()[0]};
 
         btnAccion = "ELIMINAR";
-        autoGenerar("ELIMINAR MODELO DE AVION", h/6, lbl, cps, tipo, lgs, nnl, 4);
+        autoGenerar("ELIMINAR PRUEBA DE AVIACION", h/6, lbl, cps, tipo, lgs, nnl, 4);
         panel.setBackground(new Color(255, 164, 164));
-
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] inps = recibirInputs(tipo, nnl, lgs, lbl);
-                String campo = new Model().propiedades()[0];
+                String campo = new Aviation_Test().propiedades()[0];
                 if(inps == null) return;
                 String valor = inps[0];
                 if(tipo[0].equals("CHAR") || tipo[0].equals("VARCHAR")) valor = "'"+inps[0]+"'";
-                int codigo = dao.EliminarUniversal("Model", campo+"="+valor);
-                notificarSQL(codigo, "Eliminacion exitosa", "Registro duplicado", "Este modelo es utilizado en otros registros", "Registro eliminado");
+                int codigo = dao.EliminarUniversal("Aviation_Test", campo+"="+valor);
+                notificarSQL(codigo, "Eliminacion exitosa", "Registro duplicado", "este tipo de prueba es utilizado en otros registros", "Registro eliminado");
             }
         });
     }

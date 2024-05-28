@@ -8,14 +8,14 @@ public class Airplane_Technician_Test extends ModeloBD {
     int Registration_Number;
     String Model_Number;
     String Test_Begin;
-    short Hours_Spent;
-    short Score_Recieved;
+    int Hours_Spent;
+    int Score_Recieved;
 
-    public Airplane_Technician_Test(String SSN, String model_Number, int registration_Number, int number_FAA, String test_Begin, short hours_Spent, short score_Recieved) {
+    public Airplane_Technician_Test(String SSN, int number_FAA, int registration_Number, String model_Number, String test_Begin, int hours_Spent, int score_Recieved) {
         this.SSN = SSN;
-        Model_Number = model_Number;
-        Registration_Number = registration_Number;
         Number_FAA = number_FAA;
+        Registration_Number = registration_Number;
+        Model_Number = model_Number;
         Test_Begin = test_Begin;
         Hours_Spent = hours_Spent;
         Score_Recieved = score_Recieved;
@@ -44,7 +44,7 @@ public class Airplane_Technician_Test extends ModeloBD {
     }
 
     public static String[] obtenerLabels(){
-        return new String[]{"SSN", "Numero de modelo", "Numero de registro", "Numero de prueba FAA", "Fecha de inicio", "Horas tomadas", "Puntuacion obtenida"};
+        return new String[]{"SSN", "Numero de prueba FAA", "Numero de registro", "Numero de modelo", "Fecha de inicio", "Horas tomadas", "Puntuacion obtenida"};
     }
     public static String[] obtenerComponentes(){
         return new String[]{
@@ -52,7 +52,7 @@ public class Airplane_Technician_Test extends ModeloBD {
         };
     }
     public static String[] obtenerTipoDato(){
-        return new String[]{"CHAR", "int", "int", "CHAR", "DATE", "short", "short"};
+        return new String[]{"CHAR", "int", "int", "CHAR", "DATE", "int", "int"};
     }
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, true, true, true, true, true};

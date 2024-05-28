@@ -1,9 +1,6 @@
 package vista;
 
 import controlador.DAO;
-import modelo.Employee;
-import modelo.ModeloBD;
-import modelo.Registrable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +11,8 @@ import java.util.ArrayList;
 
 import static controlador.DAO.d;
 
-public class Ventana extends JInternalFrame{
-    public InternalRasLayout ras;
+public class VentanaExterna extends JFrame {
+    public RasLayout ras;
     public ArrayList<Wrap> salida;
     public String title;
     public int w;
@@ -32,10 +29,16 @@ public class Ventana extends JInternalFrame{
     public JButton btnCancelar;
     public JButton btnValidar;
     public JButton btnLimpiar;
-    public Ventana ref = this;
+    public VentanaExterna ref = this;
     protected Panelo panel;
     protected String btnAccion = "-";
-    public void autoGenerar(String label, int panelHeight, String[] lbls, String[] cps, String[] tipos, int[] lgs, boolean[] noNulos, int separation){
+
+    public void autoGenerar(String label, int panelHeight, String[] lbls, String[] cps, String[] tipos, int[] lgs, boolean[] noNulos, int separation, int yp, int lblMaxWidth){
+
+        ras = new RasLayout(this, title, w, h);
+        salida = new ArrayList<Wrap>();
+        ras.cw = celw;
+        ras.ch = celh;
 
         panel = new Panelo();
         lblFont lblPanel = new lblFont(label, "Arial", Font.BOLD, 30, 0,0,0);
@@ -62,7 +65,7 @@ public class Ventana extends JInternalFrame{
         int totalHeight = nextHeight*lbls.length; //celdas totales abarcadas por el formulario
 
         System.out.println("altura de formulario " + totalHeight + "\naltura de pantalla"+ (h/celh));
-        int halfDiff = (h/celh - totalHeight)/2/celh + (panelHeight/celh/2); //margen para centrar el formulario
+        int halfDiff = (h/celh - totalHeight)/2/celh + (panelHeight/celh/2)+yp; //margen para centrar el formulario
 
         System.out.println("margen vertical de " + halfDiff + "celdas");
 
@@ -74,7 +77,7 @@ public class Ventana extends JInternalFrame{
                 ((JComboBox<String>) inputs[i]).addItem("Traffic Controller");
             }
             //agregar al ras
-            salida.add(ras.encuadrarRelativo(inputs[i], xi+lblWidth+2, halfDiff+nextHeight*(i+1), txtWidth, txtHeight));
+            salida.add(ras.encuadrarRelativo(inputs[i], xi+lblMaxWidth+2, halfDiff+nextHeight*(i+1), txtWidth, txtHeight));
             i++;
         }
 
@@ -94,8 +97,8 @@ public class Ventana extends JInternalFrame{
         ras.agregarRelativo(wPanel, panel.x, panel.y, panel.w, panel.h);
         Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+27, (int) (halfDiff+nextHeight*(i+1)*0.25), 10,2);
 
-        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+26, (int)(halfDiff+nextHeight*(i+1)*0.5), 12, 2);
-        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+26, (int)(halfDiff+nextHeight*(i+1)*0.75), 12,2);
+        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+27, (int)(halfDiff+nextHeight*(i+1)*0.5), 12, 2);
+        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+27, (int)(halfDiff+nextHeight*(i+1)*0.8), 12,2);
 
 
         wBtnValidar.centerOffset(1,1);
@@ -103,6 +106,8 @@ public class Ventana extends JInternalFrame{
         wBtnLimpiar.centerOffset(1,1);
 
         panel.ras.agregarRelativo(wLblAgregar, panel.w/2, panel.h/2, panel.w, panel.h);
+        lblPanel.setVerticalAlignment(SwingConstants.CENTER);
+        lblPanel.setHorizontalAlignment(SwingConstants.CENTER);
         wLblAgregar.centerOffset(1,1);
         wLblAgregar.posicionarRelativo(panel);
         panel.salida.add(wLblAgregar);
@@ -125,14 +130,13 @@ public class Ventana extends JInternalFrame{
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    ref.setClosed(true);
-                } catch (PropertyVetoException ex) {
-                    throw new RuntimeException(ex);
-                }
+                ref.dispose();
+
             }
         });
+
     }
+
     public String[] recibirInputs(String[] tipos, boolean[] noNulos, int[]lgs, String[] lbls){
         int j = 0;
         String[] inps = new String[inputs.length];

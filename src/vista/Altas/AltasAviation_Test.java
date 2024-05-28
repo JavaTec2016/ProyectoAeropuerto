@@ -48,12 +48,9 @@ public class AltasAviation_Test extends Ventana {
 
                     return;
                 }
-                Aviation_Test att = new Aviation_Test(Integer.parseInt(inps[0]), inps[1], Byte.parseByte(inps[2]));
-                if( dao.agregarUniversal(att) != 0){
-                    JOptionPane.showMessageDialog(ref, "Error en los datos, verifique las experiencias", "Error de datos", JOptionPane.ERROR_MESSAGE);
-                }else {
-                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Nuevo registro", JOptionPane.INFORMATION_MESSAGE);
-                }
+                Aviation_Test att = new Aviation_Test(Integer.parseInt(inps[0]), inps[1], Integer.parseInt(inps[2]));
+                int codigo = dao.agregarUniversal(att);
+                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "Error de relacion", "Registro agregado");
             }
         });
     }

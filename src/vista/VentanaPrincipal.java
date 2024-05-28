@@ -3,9 +3,7 @@ package vista;
 import modelo.Employee;
 import modelo.Registrable;
 import vista.Altas.*;
-import vista.Bajas.bajasAirplane;
-import vista.Bajas.bajasEmployee;
-import vista.Bajas.bajasModel;
+import vista.Bajas.*;
 import vista.MenuPrincipal.PanelLateral;
 import vista.MenuPrincipal.PanelSuperior;
 import vista.MenuPrincipal.PanelTabla;
@@ -33,6 +31,9 @@ public class VentanaPrincipal extends JFrame {
     JDesktopPane desk;
     Ventana ventanaAltas;
     Ventana ventanaBajas;
+
+    VentanaExterna ventanaBajas2;
+
     Ventana ventanaCambios;
     Ventana ventanaConsultas;
     Ventana ventanaActual;
@@ -259,9 +260,9 @@ public class VentanaPrincipal extends JFrame {
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
                     //v = new AltasAirplane_Technician_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
-                    //v = new AltasAviation_Test();
+                    v = new bajasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
-                    //v = new AltasTraffic_Controller();
+                    new bajasTraffic_Controller();
                 }
 
                 ventanaBajas = v;

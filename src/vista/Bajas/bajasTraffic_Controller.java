@@ -1,45 +1,42 @@
 package vista.Bajas;
 
-import modelo.Airplane;
 import modelo.Employee;
-import vista.InternalRasLayout;
-import vista.Ventana;
-import vista.Wrap;
+import modelo.Traffic_Controller;
+import vista.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
-public class bajasEmployee extends Ventana {
+public class bajasTraffic_Controller extends VentanaExterna {
 
-    public bajasEmployee(){
+    public bajasTraffic_Controller(){
         ref = this;
         celh = 20;
         celw = 20;
         w = 900;
         h = 400;
-        title = "Agregar Avion";
-        ras = new InternalRasLayout(this, title, w, h);
-        salida = new ArrayList<Wrap>();
-        ras.cw = celw;
-        ras.ch = celh;
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
-        setClosable(true);
-        setIconifiable(false);
-        setMaximizable(false);
+        title = "Eliminar controlador de trafico";
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        String[] lbl = {Traffic_Controller.obtenerLabels()[0]};
+        String[] cps = {Traffic_Controller.obtenerComponentes()[0]};
 
-        String[] lbl = {Employee.obtenerLabels()[0]};
-        String[] cps = {Employee.obtenerComponentes()[0]};
-
-        String[] tipo = {Employee.obtenerTipoDato()[0]};
-        int[] lgs = {Employee.obtenerLongitudes()[0]};
-        boolean[] nnl = {Employee.obtenerNoNulos()[0]};
-
+        String[] tipo = {Traffic_Controller.obtenerTipoDato()[0]};
+        int[] lgs = {Traffic_Controller.obtenerLongitudes()[0]};
+        boolean[] nnl = {Traffic_Controller.obtenerNoNulos()[0]};
         btnAccion = "ELIMINAR";
-        autoGenerar("ELIMINAR EMPLEADO", h/6, lbl, cps, tipo, lgs, nnl, 4);
+        autoGenerar("ELIMINAR CONTROLADOR DE TRAFICO", h/6, lbl, cps, tipo, lgs, nnl, 3, 2, 7);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                RasLayout.refrescar(salida, ras);
+            }
+        });
         panel.setBackground(new Color(255, 164, 164));
         btnValidar.addActionListener(new ActionListener() {
             @Override
@@ -54,5 +51,6 @@ public class bajasEmployee extends Ventana {
 
             }
         });
+
     }
 }

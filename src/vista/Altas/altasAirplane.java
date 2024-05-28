@@ -127,9 +127,8 @@ public class altasAirplane extends Ventana{
                     Airplane m = new Airplane(reg, txtModelNumber.getText());
 
                     //cosas de DAO y sql
-                    byte codigo = dao.agregarUniversal(m);
-                    if(codigo == 0) JOptionPane.showMessageDialog(ref, "Operacion exitosa ("+codigo+")", "Agregado", JOptionPane.INFORMATION_MESSAGE);
-                    if(codigo == 3) JOptionPane.showMessageDialog(ref, "El registro no se pudo agregar, verifique los datos", "Error de datos", JOptionPane.ERROR_MESSAGE);
+                    int codigo = dao.agregarUniversal(m);
+                    notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "El modelo de avion no existe", "Registro agregado");
 
 
                 }catch (NumberFormatException exc){

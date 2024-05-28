@@ -154,7 +154,8 @@ public class altasExpertises extends Ventana {
 
                 Technician_Model_Expertise tme = new Technician_Model_Expertise(inps[0], inps[1]);
 
-                dao.agregarUniversal(tme);
+                int codigo = dao.agregarUniversal(tme);
+                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "El Tecnico o numero de modelo son incorrectos", "Registro agregado");
             }
         });
 

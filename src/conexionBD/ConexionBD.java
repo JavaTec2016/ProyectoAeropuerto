@@ -31,23 +31,31 @@ public class ConexionBD {
         }
     }
     //metodos para operaciones ABC (Data Manipulation Language)
-    public boolean ejecutarInstruccionDML(String instruccionSQL){
-        boolean res = false;
+    public int ejecutarInstruccionDML(String instruccionSQL){
         try {
 
             ste = conexion.createStatement();
-            res = ste.executeUpdate(instruccionSQL) > 0;
+            ste.executeUpdate(instruccionSQL);
+            return 0;
+        }catch (SQLIntegrityConstraintViolationException integ){
 
-        } catch (SQLException e) {
+            System.out.println("Error: integridad de datos: " + integ.getErrorCode() + " > " + integ.getSQLState());
+            integ.printStackTrace();
+
+            return integ.getErrorCode();
+        }
+        catch (SQLException e) {
             //throw new RuntimeException(e);
             System.out.println("Error en la instruccion");
+            e.printStackTrace();
+            return -1;
         }
-        return res;
+
     }
     //metodo para Consultas
     public ResultSet ejecutarConsultaSQL(String instruccionSQL){
         rs = null;
-
+        System.out.println(instruccionSQL);
         try {
 
             ste = conexion.createStatement();
@@ -55,6 +63,7 @@ public class ConexionBD {
 
         } catch (SQLException e) {
             System.out.println("Error en la instruccion");
+            e.printStackTrace();
         }
 
 

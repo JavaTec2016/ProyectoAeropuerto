@@ -47,12 +47,9 @@ public class AltasAirplane_Technician_Test extends Ventana {
 
                     return;
                 }
-                Airplane_Technician_Test att = new Airplane_Technician_Test(inps[0], inps[1], Integer.parseInt(inps[2]), Integer.parseInt(inps[3]), inps[4], Short.parseShort(inps[5]), Short.parseShort(inps[5]));
-                if( dao.agregarUniversal(att) != 0){
-                    JOptionPane.showMessageDialog(ref, "Error en los datos, verifique las experiencias", "Error de datos", JOptionPane.ERROR_MESSAGE);
-                }else {
-                    JOptionPane.showMessageDialog(ref, "Operacion exitosa", "Nuevo registro", JOptionPane.INFORMATION_MESSAGE);
-                }
+                Airplane_Technician_Test att = new Airplane_Technician_Test(inps[0], Integer.parseInt(inps[1]), Integer.parseInt(inps[2]), inps[3], inps[4], Short.parseShort(inps[5]), Short.parseShort(inps[6]));
+                int codigo = dao.agregarUniversal(att);
+                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "los datos de experiencia o registro de avion son incorrectos", "Registro agregado");
             }
         });
     }

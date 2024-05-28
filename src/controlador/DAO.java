@@ -18,7 +18,7 @@ public class DAO {
     //0: operacion exitosa
     //1: un campo no existe para el objeto dado
     //2: un campo es inaccesible para la clase dada
-    public byte agregarUniversal(Registrable registrable){
+    public int agregarUniversal(Registrable registrable){
         //ArrayList extraidos = new ArrayList();
         String tipo = registrable.getClass().getName();
         for(int j = tipo.length()-1; j >= 0; j--){
@@ -65,14 +65,14 @@ public class DAO {
         int corte = sql.length()-2;
         sql = sql.substring(0, corte)+")";
         System.out.println(sql);
-        if(conexion.ejecutarInstruccionDML(sql)) return 0;
+        return conexion.ejecutarInstruccionDML(sql);
         //nuestra sentencia esta lista, le falta una BD
         //conexion.ejecutarInstruccionDML(sql);
-        return 3;
+
     }
     //recibe una cantidad cualquiera de filtros con datos obtenidos y formateados desde la interfaz
     //por lo que no es necesario hacer cochinadas con clases
-    public boolean EliminarUniversal(String tabla, String ...filtros){
+    public int EliminarUniversal(String tabla, String ...filtros){
         String sql = "DELETE FROM " + tabla + " WHERE ";
         for(String filtro : filtros){
             sql += filtro+", ";
@@ -86,7 +86,7 @@ public class DAO {
     }
 
     //la interfaz toma los datos, genera un objeto y lo pasa al metodo
-    public byte actualizarUniversal(Registrable registrable, String ...filtros){
+    public int actualizarUniversal(Registrable registrable, String ...filtros){
         //lectura del objeto, similar al agregarUniversal
         String tipo = registrable.getClass().getName();
         for(int j = tipo.length()-1; j >= 0; j--){
