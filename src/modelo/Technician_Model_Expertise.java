@@ -47,6 +47,12 @@ public class Technician_Model_Expertise extends ModeloBD {
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true};
+    }
+
     public static int[] obtenerLongitudes(){
         return new int[]{20, 5};
     }

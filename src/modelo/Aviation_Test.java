@@ -4,11 +4,11 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 
 public class Aviation_Test extends ModeloBD {
-    int Number_FAA;
+    Integer Number_FAA;
     String Name;
-    int Max_Score;
+    Integer Max_Score;
 
-    public Aviation_Test(int nf,String n, int ms){
+    public Aviation_Test(Integer nf,String n, Integer ms){
         Number_FAA = nf;
         Name = n;
         Max_Score = ms;
@@ -61,6 +61,12 @@ public class Aviation_Test extends ModeloBD {
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true, true};
+    }
+
     public static int[] obtenerLongitudes(){
         return new int[]{-1, 20, -1};
     }

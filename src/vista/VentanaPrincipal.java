@@ -3,9 +3,8 @@ package vista;
 import modelo.Registrable;
 import vista.Altas.*;
 import vista.Bajas.*;
-import vista.MenuPrincipal.PanelLateral;
-import vista.MenuPrincipal.PanelSuperior;
-import vista.MenuPrincipal.PanelTabla;
+import vista.Cambios.*;
+import vista.MenuPrincipal.*;
 import vista.login.VentanaLogin;
 
 import javax.swing.*;
@@ -177,6 +176,32 @@ public class VentanaPrincipal extends JFrame {
                     ventanaBajas = new bajasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
                     ventanaBajas = new bajasTraffic_Controller();
+                }
+            }
+        });
+        barraOpciones.btnCambios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(barraTablas.btnActual == null){
+                    JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(ventanaCambios != null) ventanaCambios.dispose();
+
+                if(barraTablas.btnActual == barraTablas.btnModels){
+                    ventanaCambios = new CambiosModel();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    ventanaCambios = new CambiosAirplane();
+                }else if(barraTablas.btnActual == barraTablas.btnEmployees){
+                    ventanaCambios = new CambiosEmployee();
+                }else if(barraTablas.btnActual == barraTablas.btnExpertises){
+                    ventanaCambios = new CambiosExpertises();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
+                    ventanaCambios = new CambiosAirplane_Technician_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
+                    ventanaCambios = new CambiosAviation_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
+                    ventanaCambios = new CambiosTraffic_Controller();
                 }
             }
         });

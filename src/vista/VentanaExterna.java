@@ -2,8 +2,10 @@ package vista;
 
 import controlador.DAO;
 import modelo.ModeloBD;
+import modelo.Registrable;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +45,9 @@ public class VentanaExterna extends JFrame {
     protected String[] tipos;
     protected int[] lgs;
     protected boolean[] nnl;
-
+    protected JTable ress;
+    protected DefaultTableModel model;
+    protected JScrollPane scroller;
     public void autoGenerar(String objetivo, String label, int panelHeight, int separation, int yp, int lblMaxWidth){
         this.objetivo = objetivo;
         ras = new RasLayout(this, title, w, h);
@@ -157,6 +161,85 @@ public class VentanaExterna extends JFrame {
         });
 
     }
+    public void generarConsulta(String objetivo, String label, int panelHeight, int separation, int yp, int lblMaxWidth){
+        this.objetivo = objetivo;
+        ras = new RasLayout(this, title, w, h);
+        salida = new ArrayList<Wrap>();
+        ras.cw = celw;
+        ras.ch = celh;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        model = new DefaultTableModel(null, cps);
+        ress = new JTable(model);
+        scroller = new JScrollPane(ress);
+
+
+
+        panel = new Panelo();
+        lblFont lblPanel = new lblFont(label, "Arial", Font.BOLD, 30, 0,0,0);
+        lblPanel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPanel.setVerticalAlignment(SwingConstants.CENTER);
+        panel = new Panelo();
+        panel.w = w;
+        panel.h = panelHeight;
+        panel.x = 0;
+        panel.y = 0;
+        panel.ras = new PanelRasLayout(panel, 0, 0, panel.w, panel.h);
+        panel.salida = new ArrayList<Wrap>();
+        panel.setBackground(new Color(184, 251, 184));
+
+        System.out.println("obtenidos " + lbls.length + " labels");
+        System.out.println("obtenidos " + cps.length + " componentes");
+        inputs = new JComponent[cps.length];
+
+        JComboBox<String> opciones = new JComboBox<String>();
+        for(String lbl : lbls){
+            opciones.addItem(lbl);
+        }
+        salida.add(ras.encuadrarRelativo(opciones, 4, (panel.h/celh)+2, lblMaxWidth, 2));
+
+        lblFont indicacion = new lblFont("Seleccione un atributo", "Arial", Font.BOLD, 12,0,0, 0);
+        salida.add(ras.encuadrarRelativo(indicacion, 4+(int)(lblMaxWidth/2), (panel.h/celh)+1, lblMaxWidth, 1));
+        indicacion.setHorizontalAlignment(SwingConstants.CENTER);
+        indicacion.setVerticalAlignment(SwingConstants.CENTER);
+        salida.get(salida.size()-1).centerOffset(1,0);
+
+        int resheight = h/celh-((panel.h/celh)+1);
+        //Wrap wScroll = new Wrap(scroller);
+        ras.encuadrarRelativo(scroller, (int)(w*0.4/celw), resheight/2, (int)(w*0.6/celw), (int)(resheight*0.8/celh));
+        salida.get(salida.size()-1).centerOffset(1,1);
+
+        opciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idx = opciones.getSelectedIndex();
+                inputs[1] = identificarComponente(cps[idx]);
+                if(inputs[1] instanceof JComboBox<?>){
+                    ((JComboBox)inputs[1]).addItem("Technician");
+                    ((JComboBox)inputs[1]).addItem("Traffic_Controller");
+                }
+                //if(cps[idx].equalsIgnoreCase("jtextfield")) inputs[0] = new JTextField(10);
+            }
+        });
+        inputs[0] = opciones;
+        //realiza la consulta y muestra la tabla
+        btnValidar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String campo = extraerInput(opciones);
+                String valor = extraerInput(inputs[1]);
+                if(tipos[opciones.getSelectedIndex()].equalsIgnoreCase("char") || tipos[opciones.getSelectedIndex()].equalsIgnoreCase("varchar")){
+                    if(!tipos[opciones.getSelectedIndex()].equalsIgnoreCase("null"))  valor = "'"+valor+"'";
+                }
+                if(validarInput(valor, tipos[opciones.getSelectedIndex()], nnl[opciones.getSelectedIndex()], lgs[opciones.getSelectedIndex()], lbls[opciones.getSelectedIndex()], true) != 0) return;
+                ArrayList<Registrable> res = dao.consultarUniversal(objetivo, campo+"="+valor);
+                while (model.getRowCount() > 0) model.removeRow(0);
+                for (Registrable r : res) {
+                    model.addRow(r.obtenerValores());
+                }
+            }
+        });
+    }
     protected void activarBotonValidar(String mensajeExito, String mensajeDupe, String mensajeRelacion, String tipo){
         //objeto de utilidad
 
@@ -169,7 +252,7 @@ public class VentanaExterna extends JFrame {
                 for(JComponent input : inputs){
                     String in = extraerInput(input);
 
-                    if(validarInput(in, tipos[j], nnl[j], lgs[j], lbls[j]) != 0) return;
+                    if(validarInput(in, tipos[j], nnl[j], lgs[j], lbls[j], false) != 0) return;
 
                     inps[j] = extraerInput(input, tipos[j]);
                     j++;
@@ -180,12 +263,39 @@ public class VentanaExterna extends JFrame {
             }
         });
     }
-    public String[] recibirInputs(String[] tipos, boolean[] noNulos, int[]lgs, String[] lbls){
+    protected void activarBotonModificar(String mensajeExito, String mensajeDupe, String mensajeRelacion, String tipo, int primarias){
+        //objeto de utilidad
+
+
+        btnValidar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int j = 0;
+                //prepara los argumentos para el objeto
+                Object[] inps = new Object[inputs.length];
+                for(JComponent input : inputs){
+                    String in = extraerInput(input);
+
+                    if(validarInput(in, tipos[j], nnl[j], lgs[j], lbls[j], true) != 0){
+                        System.out.println("lamomba");
+                        return;
+                    }
+                    if(in.isBlank() || in.equalsIgnoreCase("NULL")) inps[j] = null;
+                    else inps[j] = extraerInput(input, tipos[j]);
+                    j++;
+                }
+
+                int codigo = dao.actualizarUniversal(ModeloBD.instanciar(inps, objetivo), primarias);
+                notificarSQL(codigo, mensajeExito, mensajeDupe, mensajeRelacion, tipo);
+            }
+        });
+    }
+    public String[] recibirInputs(String[] tipos, boolean[] noNulos, int[]lgs, String[] lbls, boolean overrideNulo){
         int j = 0;
         String[] inps = new String[inputs.length];
         for(JComponent input : inputs){
             String in = extraerInput(input);
-            if(validarInput(in, tipos[j], noNulos[j], lgs[j], lbls[j]) != 0) return null;
+            if(validarInput(in, tipos[j], noNulos[j], lgs[j], lbls[j], overrideNulo) != 0) return null;
             inps[j] = in;
             j++;
         }
@@ -221,19 +331,20 @@ public class VentanaExterna extends JFrame {
     }
 
     //al extraer el input se debe validar
-    public byte validarInput(String input, String tipoDato, boolean noNulo, int limite, String label){
+    public byte validarInput(String input, String tipoDato, boolean noNulo, int limite, String label, boolean overrideNulo){
 
         ///VALIDAR LA EXISTENCIA DEL INPUT
-
-        if(noNulo && input.isBlank()){
+        if(overrideNulo) return 0;
+        if((noNulo && input.isBlank() || input.equalsIgnoreCase("NULL"))){
             JOptionPane.showMessageDialog(this, label + " no debe ser nulo", "Error de datos", JOptionPane.ERROR_MESSAGE);
             return 101;
         }
-        if(input.length() > limite && tipoDato.equals("VARCHAR")){
+        if((input.length() > limite && tipoDato.equals("VARCHAR"))){
             JOptionPane.showMessageDialog(this, label + " no debe exceder " + limite + "caracteres", "Error de datos", JOptionPane.ERROR_MESSAGE);
             return 102;
         }
-        if(input.length() != limite && tipoDato.equals("CHAR")){
+        if((input.length() != limite && tipoDato.equals("CHAR"))){
+            System.out.println(limite);
             JOptionPane.showMessageDialog(this, label + " debe tener " + limite + "caracteres", "Error de datos", JOptionPane.ERROR_MESSAGE);
             return 103;
         }
@@ -284,13 +395,20 @@ public class VentanaExterna extends JFrame {
             case 0:
                 JOptionPane.showMessageDialog(ref, mensajeExito, tipo, JOptionPane.INFORMATION_MESSAGE);
                 break;
+            case 1:
+                JOptionPane.showMessageDialog(ref, "Sin cambios", tipo, JOptionPane.WARNING_MESSAGE);
+                break;
             case 1062:
                 JOptionPane.showMessageDialog(ref, mensajeDupe, "Error de duplicacion", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 1048:
+                //JOptionPane.showMessageDialog(ref, "mensajeRelacion", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case 1451:
                 JOptionPane.showMessageDialog(ref, mensajeRelacion, "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case 1452:
+                System.out.println("notificarSQL: " + codigo);
                 JOptionPane.showMessageDialog(ref, mensajeRelacion, "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             default:

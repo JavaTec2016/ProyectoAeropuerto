@@ -35,7 +35,7 @@ public class bajasTraffic_Controller extends VentanaExterna {
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] inps = recibirInputs(tipos, nnl, lgs, lbls);
+                String[] inps = recibirInputs(tipos, nnl, lgs, lbls, false);
                 String campo = new Employee().propiedades()[0];
                 if(inps == null) return;
                 String valor = inps[0];

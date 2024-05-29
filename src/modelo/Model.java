@@ -4,14 +4,24 @@ import java.lang.reflect.Field;
 
 public class Model extends ModeloBD {
     String Model_Number;
-    int Capacity;
-    int Weight;
+    Integer Capacity;
+    Integer Weight;
 
-    public Model(String model_Number, int capacity, int weight) {
+    public Model(String model_Number, Integer capacity, Integer weight){
         Model_Number = model_Number;
         Capacity = capacity;
         Weight = weight;
     }
+
+    /**
+     *
+     * public Model(String model_Number, int capacity, int weight) {
+     *         Model_Number = model_Number;
+     *         Capacity = capacity;
+     *         Weight = weight;
+     *     }
+     */
+
     public Model(){};
     @Override
     public String toString() {
@@ -59,6 +69,12 @@ public class Model extends ModeloBD {
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true, true};
+    }
+
     public static int[] obtenerLongitudes(){
         return new int[]{5, -1, -1};
     }

@@ -34,7 +34,7 @@ public class bajasAirplane_Technician_Test extends VentanaExterna {
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] inps = recibirInputs(tipos, nnl, lgs, lbls);
+                String[] inps = recibirInputs(tipos, nnl, lgs, lbls, false);
                 if(inps == null || inps.length < 3) return;
                 String[] outs = new String[inps.length];
                 String[] campos = new Airplane_Technician_Test().propiedades();

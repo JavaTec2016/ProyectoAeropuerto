@@ -5,15 +5,15 @@ import java.lang.reflect.Field;
 public class Airplane_Technician_Test extends ModeloBD {
 
     String SSN;
-    int Number_FAA;
-    int Registration_Number;
+    Integer Number_FAA;
+    Integer Registration_Number;
     String Model_Number;
     String Test_Begin;
-    int Hours_Spent;
-    int Score_Recieved;
+    Integer Hours_Spent;
+    Integer Score_Recieved;
 
 
-    public Airplane_Technician_Test(String SSN, int number_FAA, int registration_Number, String model_Number, String test_Begin, int hours_Spent, int score_Recieved) {
+    public Airplane_Technician_Test(String SSN, Integer number_FAA, Integer registration_Number, String model_Number, String test_Begin, Integer hours_Spent, Integer score_Recieved) {
         this.SSN = SSN;
         Number_FAA = number_FAA;
         Registration_Number = registration_Number;
@@ -59,6 +59,12 @@ public class Airplane_Technician_Test extends ModeloBD {
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, true, true, true, true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true, true, true, true, true, true};
+    }
+
     //-1 numero
     //-2 date
     public static int[] obtenerLongitudes(){

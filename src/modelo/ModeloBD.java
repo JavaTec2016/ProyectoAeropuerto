@@ -36,6 +36,11 @@ public class ModeloBD implements Registrable {
     public static boolean[] obtenerNoNulos(){return null;}
     public static int[] obtenerLongitudes(){return null;}
 
+    @Override
+    public boolean[] noNulos() {
+        return null;
+    }
+
     public Object[] obtenerValores(){
         //obtiene los campos a capturar y prepara el output
         String[] campos = propiedades();
@@ -68,7 +73,14 @@ public class ModeloBD implements Registrable {
         try {
 
             Class<?> modelombo = Class.forName("modelo."+className);
+            int i = 1;
             Constructor<?> constructombo = modelombo.getConstructors()[0];
+            while (constructombo.getParameterCount() != args.length){
+                constructombo = modelombo.getConstructors()[i];
+                System.out.println(className + " encontrado construc de " + constructombo.getParameterCount() + " args");
+                i++;
+            }
+
             return (ModeloBD)(constructombo.newInstance(args));
 
         } catch (InstantiationException e) {

@@ -2,13 +2,13 @@ package modelo;
 
 public class Airplane extends ModeloBD{
 
-    int Registration_Number;
+    Integer Registration_Number;
     String Model_Number;
     //int Capacity;
     //int Weight;
 
 
-    public Airplane(int registration_Number, String model_Number) {
+    public Airplane(Integer registration_Number, String model_Number) {
         Registration_Number = registration_Number;
         Model_Number = model_Number;
     }
@@ -35,6 +35,12 @@ public class Airplane extends ModeloBD{
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true};
+    }
+
     //-1 no revisa
     public static int[] obtenerLongitudes(){
         return new int[]{-1, 5};

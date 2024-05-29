@@ -33,7 +33,7 @@ public class bajasExpertise extends VentanaExterna {
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] inps = recibirInputs(tipos, nnl, lgs, lbls);
+                String[] inps = recibirInputs(tipos, nnl, lgs, lbls, false);
                 if(inps == null || inps.length < 2) return;
                 String[] outs = new String[inps.length];
                 String[] campos = new Technician_Model_Expertise().propiedades();

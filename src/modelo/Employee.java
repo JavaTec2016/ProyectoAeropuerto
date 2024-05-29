@@ -11,11 +11,11 @@ public class Employee extends ModeloBD {
     String Address_City;
     String Address_Postal_Code;
     String Phone_Number;
-    int Union_Membership;
-    double Salary;
+    Integer Union_Membership;
+    Integer Salary;
     String Charge;
 
-    public Employee(String SSN, String first_Name, String last_Name, String address_Street, String address_City, String address_Postal_Code, String phone_Number, int union_Membership, double salary, String charge) {
+    public Employee(String SSN, String first_Name, String last_Name, String address_Street, String address_City, String address_Postal_Code, String phone_Number, Integer union_Membership, Integer salary, String charge) {
         this.SSN = SSN;
         First_Name = first_Name;
         Last_Name = last_Name;
@@ -80,6 +80,12 @@ public class Employee extends ModeloBD {
     public static boolean[] obtenerNoNulos(){
         return new boolean[]{true, true, false, true, true, false, true, true, true, true};
     }
+
+    @Override
+    public boolean[] noNulos() {
+        return new boolean[]{true, true, false, true, true, false, true, true, true, true};
+    }
+
     public static int[] obtenerLongitudes(){
         return new int[]{20, 30, 30, 30, 30, 10, 10, -1, -1, 30};
     }
