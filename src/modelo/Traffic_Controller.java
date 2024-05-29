@@ -8,7 +8,7 @@ public class Traffic_Controller extends ModeloBD{
         SSN = sSN;
         Last_Exam = last_Exam;
     }
-
+    public Traffic_Controller(){};
     @Override
     public String toString() {
         return "Traffic_Controller{" +

@@ -20,33 +20,27 @@ public class bajasTraffic_Controller extends VentanaExterna {
         w = 900;
         h = 400;
         title = "Eliminar controlador de trafico";
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        String[] lbl = {Traffic_Controller.obtenerLabels()[0]};
-        String[] cps = {Traffic_Controller.obtenerComponentes()[0]};
+        lbls = new String[]{Traffic_Controller.obtenerLabels()[0]};
+        cps = new String[]{Traffic_Controller.obtenerComponentes()[0]};
 
-        String[] tipo = {Traffic_Controller.obtenerTipoDato()[0]};
-        int[] lgs = {Traffic_Controller.obtenerLongitudes()[0]};
-        boolean[] nnl = {Traffic_Controller.obtenerNoNulos()[0]};
+        tipos = new String[]{Traffic_Controller.obtenerTipoDato()[0]};
+        lgs = new int[]{Traffic_Controller.obtenerLongitudes()[0]};
+        nnl = new boolean[]{Traffic_Controller.obtenerNoNulos()[0]};
         btnAccion = "ELIMINAR";
-        autoGenerar("ELIMINAR CONTROLADOR DE TRAFICO", h/6, lbl, cps, tipo, lgs, nnl, 3, 2, 7);
-
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                RasLayout.refrescar(salida, ras);
-            }
-        });
+        autoGenerar("Traffic_Controller","ELIMINAR CONTROLADOR DE TRAFICO", h/6, 3, 2, 7);
         panel.setBackground(new Color(255, 164, 164));
+
+
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] inps = recibirInputs(tipo, nnl, lgs, lbl);
+                String[] inps = recibirInputs(tipos, nnl, lgs, lbls);
                 String campo = new Employee().propiedades()[0];
                 if(inps == null) return;
                 String valor = inps[0];
-                if(tipo[0].equals("CHAR") || tipo[0].equals("VARCHAR")) valor = "'"+inps[0]+"'";
-                int codigo = dao.EliminarUniversal("Employee", campo+"="+valor);
+                if(tipos[0].equals("CHAR") || tipos[0].equals("VARCHAR")) valor = "'"+inps[0]+"'";
+                int codigo = dao.EliminarUniversal("Traffic_Controller", campo+"="+valor);
                 notificarSQL(codigo, "Eliminacion exitosa", "Registro duplicado", "Este empleado es utilizado en otros registros", "Registro eliminado");
 
             }

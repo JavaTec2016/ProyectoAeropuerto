@@ -1,6 +1,5 @@
 package vista;
 
-import modelo.Employee;
 import modelo.Registrable;
 import vista.Altas.*;
 import vista.Bajas.*;
@@ -10,9 +9,6 @@ import vista.MenuPrincipal.PanelTabla;
 import vista.login.VentanaLogin;
 
 import javax.swing.*;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -29,19 +25,13 @@ public class VentanaPrincipal extends JFrame {
     PanelTabla panelTabla;
 
     JDesktopPane desk;
-    Ventana ventanaAltas;
-    Ventana ventanaBajas;
 
-    VentanaExterna ventanaBajas2;
+    VentanaExterna ventanaAltas;
+    VentanaExterna ventanaBajas;
+    VentanaExterna ventanaCambios;
+    VentanaExterna ventanaConsultas;
 
-    Ventana ventanaCambios;
-    Ventana ventanaConsultas;
-    Ventana ventanaActual;
 
-    Wrap wAltas;
-    Wrap wBajas;
-    Wrap wCambios;
-    Wrap wConsultas;
     Wrap wActual;
     VentanaPrincipal ref;
     public VentanaPrincipal(){
@@ -68,23 +58,6 @@ public class VentanaPrincipal extends JFrame {
         ras.agregarRelativo(wDesk, desk.getX(), desk.getY(), desk.getWidth(), desk.getHeight());
         partes.add(wDesk);
 
-        ventanaAltas = new altasModel();
-        ventanaBajas = new Ventana();
-        ventanaCambios = new Ventana();
-        ventanaConsultas = new Ventana();
-        ventanaActual = new Ventana();
-
-        ventanaAltas.setVisible(true);
-        ventanaBajas.setVisible(false);
-        ventanaCambios.setVisible(false);
-        ventanaConsultas.setVisible(false);
-        ventanaActual.setVisible(false);
-
-        ventanaAltas.setEnabled(true);
-        ventanaBajas.setEnabled(false);
-        ventanaCambios.setEnabled(false);
-        ventanaConsultas.setEnabled(false);
-        ventanaActual.setEnabled(false);
 
         vl.setResizable(false);
         vl.setMaximizable(false);
@@ -93,23 +66,7 @@ public class VentanaPrincipal extends JFrame {
 
         //INICIALIZACION DE PANTALLAS ABCC
 
-        ventanaAltas = new VentanaLogin();
-        ventanaBajas = new VentanaLogin();
 
-        Wrap wk = new Wrap(ventanaAltas);
-        wBajas = new Wrap(ventanaBajas);
-
-        wk.resize = false;
-        wBajas.resize = false;
-
-        ras.agregarRelativo(wk, 0,0,600,600);
-        ras.agregarRelativo(wBajas, 0,0,600,600);
-
-        remove(ventanaAltas);
-        remove(ventanaBajas);
-
-        desk.add(ventanaAltas);
-        desk.add(ventanaBajas);
 
         panelFondo.setBackground(new Color(100, 100, 100));
         panelFondo.setForeground(new Color(255,255,255));
@@ -137,28 +94,11 @@ public class VentanaPrincipal extends JFrame {
         panelTabla.setEnabled(false);
         ras.agregarRelativo(wPanelTabla, panelTabla.x, panelTabla.y, panelTabla.w, panelTabla.h);
 
-        //ventanaAltas = new VentanaLogin();
-        wAltas = new Wrap(ventanaAltas);
-        wBajas = new Wrap(ventanaBajas);
-        wCambios = new Wrap(ventanaCambios);
-        wConsultas = new Wrap(ventanaConsultas);
-
-        //System.out.println(ventanaAltas.w);
-       // ras.agregarRelativo(wAltas, 0, 0, 700, 700);
-
-        //System.out.println(wAltas.widthFrom);
-        //wAltas.centerOffset(1,1);
-
-        partes.add(wk);
         partes.add(wvl);
         partes.add(wFondo);
         partes.add(wPanelTabla);
         partes.add(wBarraOpciones);
         partes.add(wBarraTablas);
-
-        //desk.add(ventanaAltas);
-        partes.add(wAltas);
-        partes.add(wBajas);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -197,46 +137,21 @@ public class VentanaPrincipal extends JFrame {
                     JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Agregar registro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                desk.setVisible(true);
-                desk.removeAll();
-                Ventana v = new altasModel();
-
-                if(barraTablas.btnActual == barraTablas.btnAirplanes){
-                    v = new altasAirplane();
+                if(barraTablas.btnActual == barraTablas.btnModels){
+                    ventanaAltas = new altasModel();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    ventanaAltas = new altasAirplane();
                 }else if(barraTablas.btnActual == barraTablas.btnEmployees){
-                    v = new altasEmployee();
+                    ventanaAltas = new altasEmployee();
                 }else if(barraTablas.btnActual == barraTablas.btnExpertises){
-                    v = new altasExpertises();
+                    ventanaAltas = new altasExpertises();
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
-                    v = new AltasAirplane_Technician_Test();
+                    ventanaAltas = new AltasAirplane_Technician_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
-                    v = new AltasAviation_Test();
+                    ventanaAltas = new AltasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
-                    v = new AltasTraffic_Controller();
+                    ventanaAltas = new AltasTraffic_Controller();
                 }
-
-                ventanaAltas = v;
-                ras.prepararRelativo(wAltas, 0, 0, ventanaAltas.w, ventanaAltas.h);
-                wAltas.centerOffset(0,0);
-                ras.actualizarRelativo(wAltas);
-
-                desk.setBounds(ventanaAltas.getBounds());
-                ras.prepararRelativo(wDesk, getWidth()/2, getHeight()/2, desk.getWidth(), desk.getHeight());
-                wDesk.centerOffset(1,1);
-
-                wAltas.posicionarRelativo(ref);
-                wDesk.posicionarRelativo(ref);
-
-                desk.add(ventanaAltas);
-                ventanaAltas.addInternalFrameListener(new InternalFrameAdapter() {
-                    @Override
-                    public void internalFrameClosing(InternalFrameEvent e) {
-                        desk.setVisible(false);
-                    }
-                });
-                ventanaAltas.setEnabled(true);
-                ventanaAltas.setVisible(true);
             }
         });
         barraOpciones.btnBajas.addActionListener(new ActionListener() {
@@ -246,46 +161,23 @@ public class VentanaPrincipal extends JFrame {
                     JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Eliminar registro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                if(ventanaBajas != null) ventanaBajas.dispose();
 
-                desk.setVisible(true);
-                desk.removeAll();
-                Ventana v = new bajasModel();
-
-                if(barraTablas.btnActual == barraTablas.btnAirplanes){
-                    v = new bajasAirplane();
+                if(barraTablas.btnActual == barraTablas.btnModels){
+                    ventanaBajas = new bajasModel();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    ventanaBajas = new bajasAirplane();
                 }else if(barraTablas.btnActual == barraTablas.btnEmployees){
-                    v = new bajasEmployee();
+                    ventanaBajas = new bajasEmployee();
                 }else if(barraTablas.btnActual == barraTablas.btnExpertises){
-                    //v = new altasExpertises();
+                    ventanaBajas = new bajasExpertise();
                 }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
-                    //v = new AltasAirplane_Technician_Test();
+                    ventanaBajas = new bajasAirplane_Technician_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
-                    v = new bajasAviation_Test();
+                    ventanaBajas = new bajasAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
-                    new bajasTraffic_Controller();
+                    ventanaBajas = new bajasTraffic_Controller();
                 }
-
-                ventanaBajas = v;
-                ras.prepararRelativo(wAltas, 0, 0, ventanaBajas.w, ventanaBajas.h);
-                wBajas.centerOffset(0,0);
-                ras.actualizarRelativo(wBajas);
-
-                desk.setBounds(ventanaBajas.getBounds());
-                ras.prepararRelativo(wDesk, getWidth()/2, getHeight()/2, desk.getWidth(), desk.getHeight());
-                wDesk.centerOffset(1,1);
-
-                wAltas.posicionarRelativo(ref);
-                wDesk.posicionarRelativo(ref);
-
-                desk.add(ventanaBajas);
-                ventanaBajas.addInternalFrameListener(new InternalFrameAdapter() {
-                    @Override
-                    public void internalFrameClosing(InternalFrameEvent e) {
-                        desk.setVisible(false);
-                    }
-                });
-                //ventanaAltas.setEnabled(true);
-                //ventanaAltas.setVisible(true);
             }
         });
     }
@@ -342,7 +234,8 @@ public class VentanaPrincipal extends JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList rs = d.consultarUniversal(barraTablas.obtenerTabla());
+        ArrayList<Registrable> rs = d.consultarUniversal(barraTablas.obtenerTabla());
+        System.out.println("Se consulto la tabla " + barraTablas.obtenerTabla() + " con " + rs.size() + " registros.");
         panelTabla.agregarRegistros(rs);
     }
     public boolean identificarError(int err){

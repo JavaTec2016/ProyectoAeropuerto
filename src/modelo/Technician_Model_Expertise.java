@@ -10,6 +10,7 @@ public class Technician_Model_Expertise extends ModeloBD {
         this.SSN = SSN;
         Model_Number = model_Number;
     }
+    public Technician_Model_Expertise(){}
     public String[] propiedades(){
         Field[] fld = getClass().getDeclaredFields();
         String[] res = new String[fld.length];

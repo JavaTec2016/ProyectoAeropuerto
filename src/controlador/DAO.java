@@ -75,10 +75,10 @@ public class DAO {
     public int EliminarUniversal(String tabla, String ...filtros){
         String sql = "DELETE FROM " + tabla + " WHERE ";
         for(String filtro : filtros){
-            sql += filtro+", ";
+            sql += filtro+" AND ";
         }
-        //sobran un punto y espacio, arreglarlo
-        int corte = sql.length()-2;
+        //sobran 1 espacio, 3 caracteres AND y 1 espacio, 5 caracteres
+        int corte = sql.length()-5;
         sql = sql.substring(0, corte);
         System.out.println(sql);
 
@@ -171,23 +171,16 @@ public class DAO {
                     //rellenar los argumentos
 
                     args[j] = rs.getObject(j+1);
-
+                    //System.out.println( rs.getObject(j+1).getClass() );
                     //resulta que si le metes un date a un constructor con strings truena
                     if(rs.getObject(j+1).getClass().getName().equals("java.sql.Date")){
 
                         args[j] = rs.getObject(j+1).toString();
                     }
                 }
-                for (Object arg : args) {
-                    //System.out.println(arg);
-                }
-                //System.out.println("Agregando a: " + modelo.getName());
-                for(int i2 = 0; i2 < cons.getParameterCount(); i2++){
-                    //System.out.println("Parametro: " + cons.getGenericParameterTypes()[i2]);
-                    //System.out.println("Argumento: " + args[i].getClass().getName());
-                }
                 //inicializar el objeto como registrable
                 Registrable o = (Registrable) cons.newInstance(args);
+
                 //y agregarlo al output
                 registros.add(o);
 

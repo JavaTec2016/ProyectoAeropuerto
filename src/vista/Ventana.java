@@ -113,6 +113,7 @@ public class Ventana extends JInternalFrame{
         salida.add(wBtnLimpiar);
 
 
+
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

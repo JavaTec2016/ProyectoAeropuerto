@@ -1,11 +1,14 @@
 package vista;
 
 import controlador.DAO;
+import modelo.ModeloBD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class VentanaExterna extends JFrame {
     public int celh = 1;
     public int celw = 1;
 
-    public String tipo;
+    //public String tipo;
 
     public DAO dao = d;
 
@@ -32,13 +35,24 @@ public class VentanaExterna extends JFrame {
     public VentanaExterna ref = this;
     protected Panelo panel;
     protected String btnAccion = "-";
+    protected String objetivo;
 
-    public void autoGenerar(String label, int panelHeight, String[] lbls, String[] cps, String[] tipos, int[] lgs, boolean[] noNulos, int separation, int yp, int lblMaxWidth){
+    protected String[] lbls;
+    protected String[] cps;
 
+    protected String[] tipos;
+    protected int[] lgs;
+    protected boolean[] nnl;
+
+    public void autoGenerar(String objetivo, String label, int panelHeight, int separation, int yp, int lblMaxWidth){
+        this.objetivo = objetivo;
         ras = new RasLayout(this, title, w, h);
         salida = new ArrayList<Wrap>();
         ras.cw = celw;
         ras.ch = celh;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+
 
         panel = new Panelo();
         lblFont lblPanel = new lblFont(label, "Arial", Font.BOLD, 30, 0,0,0);
@@ -95,10 +109,11 @@ public class VentanaExterna extends JFrame {
         btnValidar = new JButton(btnAccion);
 
         ras.agregarRelativo(wPanel, panel.x, panel.y, panel.w, panel.h);
-        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+27, (int) (halfDiff+nextHeight*(i+1)*0.25), 10,2);
+        int restheight = h-panelHeight;
+        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, xi+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.2), 10,2);
 
-        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+27, (int)(halfDiff+nextHeight*(i+1)*0.5), 12, 2);
-        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+27, (int)(halfDiff+nextHeight*(i+1)*0.8), 12,2);
+        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, xi+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.45), 12, 2);
+        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, xi+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.7), 12,2);
 
 
         wBtnValidar.centerOffset(1,1);
@@ -117,6 +132,12 @@ public class VentanaExterna extends JFrame {
         salida.add(wBtnCancelar);
         salida.add(wBtnLimpiar);
 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                RasLayout.refrescar(salida, ras);
+            }
+        });
 
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
@@ -136,7 +157,29 @@ public class VentanaExterna extends JFrame {
         });
 
     }
+    protected void activarBotonValidar(String mensajeExito, String mensajeDupe, String mensajeRelacion, String tipo){
+        //objeto de utilidad
 
+
+        btnValidar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int j = 0;
+                Object[] inps = new Object[inputs.length];
+                for(JComponent input : inputs){
+                    String in = extraerInput(input);
+
+                    if(validarInput(in, tipos[j], nnl[j], lgs[j], lbls[j]) != 0) return;
+
+                    inps[j] = extraerInput(input, tipos[j]);
+                    j++;
+                }
+
+                int codigo = dao.agregarUniversal(ModeloBD.instanciar(inps, objetivo));
+                notificarSQL(codigo, mensajeExito, mensajeDupe, mensajeRelacion, tipo);
+            }
+        });
+    }
     public String[] recibirInputs(String[] tipos, boolean[] noNulos, int[]lgs, String[] lbls){
         int j = 0;
         String[] inps = new String[inputs.length];
@@ -160,6 +203,23 @@ public class VentanaExterna extends JFrame {
         System.out.println("extraerInput desconocido");
         return null;
     }
+    public Object extraerInput(JComponent comp, String tipo){
+        Object res = "";
+        if(comp instanceof JTextField) res = ((JTextField)comp).getText();
+        if(comp instanceof JComboBox) res = ((JComboBox)comp).getSelectedItem().toString();
+
+        if(tipo.equals("CHAR") || tipo.equals("VARCHAR") || tipo.equals("DATE")){
+           res = res.toString();
+        }else if (tipo.equals("DECIMAL")){
+            res = Double.parseDouble(res.toString());
+        }else if(tipo.equals("SMALLINT")){
+            res = Short.parseShort(res.toString());
+        }else{
+            res = Integer.parseInt(res.toString());
+        }
+        return res;
+    }
+
     //al extraer el input se debe validar
     public byte validarInput(String input, String tipoDato, boolean noNulo, int limite, String label){
 

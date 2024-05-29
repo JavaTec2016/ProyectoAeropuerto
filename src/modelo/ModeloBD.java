@@ -1,8 +1,14 @@
 package modelo;
 
+import vista.VentanaExterna;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 public class ModeloBD implements Registrable {
+    //public static ModeloBD modelombo = new ModeloBD();
+
     public String[] propiedades(){
         Field[] fld = getClass().getDeclaredFields();
         String[] res = new String[fld.length];
@@ -55,5 +61,42 @@ public class ModeloBD implements Registrable {
         }
         //retorna los valores del objeto
         return res;
+    }
+
+    public static ModeloBD instanciar(Object[] args, String className){
+
+        try {
+
+            Class<?> modelombo = Class.forName("modelo."+className);
+            Constructor<?> constructombo = modelombo.getConstructors()[0];
+            return (ModeloBD)(constructombo.newInstance(args));
+
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static ModeloBD instanciarVacio(String className){
+
+        try {
+
+            Class<?> modelombo = Class.forName("modelo."+className);
+            Constructor<?> constructombo = modelombo.getConstructors()[1];
+            return (ModeloBD)(constructombo.newInstance(new Object[]{}));
+
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

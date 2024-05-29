@@ -3,6 +3,7 @@ package modelo;
 import java.lang.reflect.Field;
 
 public class Airplane_Technician_Test extends ModeloBD {
+
     String SSN;
     int Number_FAA;
     int Registration_Number;
@@ -10,6 +11,7 @@ public class Airplane_Technician_Test extends ModeloBD {
     String Test_Begin;
     int Hours_Spent;
     int Score_Recieved;
+
 
     public Airplane_Technician_Test(String SSN, int number_FAA, int registration_Number, String model_Number, String test_Begin, int hours_Spent, int score_Recieved) {
         this.SSN = SSN;

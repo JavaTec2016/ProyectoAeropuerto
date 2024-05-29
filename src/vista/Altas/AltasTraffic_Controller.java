@@ -1,17 +1,9 @@
 package vista.Altas;
-
-import modelo.Aviation_Test;
 import modelo.Traffic_Controller;
-import vista.InternalRasLayout;
-import vista.Ventana;
-import vista.Wrap;
+import vista.VentanaExterna;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class AltasTraffic_Controller extends Ventana {
+public class AltasTraffic_Controller extends VentanaExterna {
     AltasTraffic_Controller ref;
     public AltasTraffic_Controller(){
         ref = this;
@@ -20,37 +12,18 @@ public class AltasTraffic_Controller extends Ventana {
         celh = 20;
         celw = 20;
         title = "Agregar Examen de Controlador de trafico";
-        ras = new InternalRasLayout(this, title, w, h);
-        salida = new ArrayList<Wrap>();
-        ras.cw = celw;
-        ras.ch = celh;
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
-        setClosable(true);
-        setIconifiable(false);
-        setMaximizable(false);
-
-        String[] lbls = Traffic_Controller.obtenerLabels();
-        String[] cps = Traffic_Controller.obtenerComponentes();
-
-        String[] tipos = Traffic_Controller.obtenerTipoDato();
-        int[] lgs = Traffic_Controller.obtenerLongitudes();
-        boolean[] noNulos = Traffic_Controller.obtenerNoNulos();
-
         btnAccion = "AGREGAR";
-        autoGenerar("AGREGAR EXAMEN DE CONTROLADOR DE TRAFICO", h/8, lbls, cps, tipos, lgs, noNulos, 2);
 
-        btnValidar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] inps = recibirInputs(tipos, noNulos, lgs, lbls);
-                if(inps == null){
+        lbls = Traffic_Controller.obtenerLabels();
+        cps = Traffic_Controller.obtenerComponentes();
 
-                    return;
-                }
-                Traffic_Controller att = new Traffic_Controller(inps[0].toString(), inps[1].toString());
-                int codigo = dao.agregarUniversal(att);
-                notificarSQL(codigo, "Operacion exitosa", "Registro duplicado", "El SSN de empleado es incorrecto", "Registro agregadp");
-            }
-        });
+        tipos = Traffic_Controller.obtenerTipoDato();
+        lgs = Traffic_Controller.obtenerLongitudes();
+        nnl = Traffic_Controller.obtenerNoNulos();
+
+
+        autoGenerar("Traffic_Controller", "AGREGAR EXAMEN DE CONTROLADOR DE TRAFICO", h/6, 2, 1, 11);
+        activarBotonValidar("Operacion exitosa", "Registro duplicado", "El SSN de empleado es incorrecto", "Registro agregado");
+
     }
 }
