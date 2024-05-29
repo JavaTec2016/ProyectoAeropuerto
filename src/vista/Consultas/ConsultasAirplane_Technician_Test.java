@@ -1,0 +1,40 @@
+package vista.Consultas;
+
+import modelo.Airplane_Technician_Test;
+import vista.RasLayout;
+import vista.VentanaExterna;
+
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+public class ConsultasAirplane_Technician_Test extends VentanaExterna {
+
+    public ConsultasAirplane_Technician_Test() {
+        ref = this;
+        celh=20;
+        celw=20;
+        w = 1500;
+        h = 800;
+        title = "Consultar Pruebas realizadas";
+        btnAccion = "BUSCAR";
+
+        lbls = Airplane_Technician_Test.obtenerLabels();
+        cps = Airplane_Technician_Test.obtenerComponentes();
+
+        tipos = Airplane_Technician_Test.obtenerTipoDato();
+        lgs = Airplane_Technician_Test.obtenerLongitudes();
+        nnl = Airplane_Technician_Test.obtenerNoNulos();
+        props = new Airplane_Technician_Test().propiedades();
+
+        generarConsulta("Airplane_Technician_Test", "BUSCAR PRUEBAS DE AVIACION REALIZADAS", h/5, 2, 1, 9);
+        panel.setBackground(new Color(168, 168, 168));
+        //activarBotonModificar("Operacion exitosa", "Registro duplicado", "Numero de modelo no existe", "Modificacion", 1);
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                RasLayout.refrescar(salida, ras);
+            }
+        });
+    }
+}

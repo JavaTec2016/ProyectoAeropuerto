@@ -4,6 +4,7 @@ import modelo.Registrable;
 import vista.Altas.*;
 import vista.Bajas.*;
 import vista.Cambios.*;
+import vista.Consultas.*;
 import vista.MenuPrincipal.*;
 import vista.login.VentanaLogin;
 
@@ -202,6 +203,32 @@ public class VentanaPrincipal extends JFrame {
                     ventanaCambios = new CambiosAviation_Test();
                 }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
                     ventanaCambios = new CambiosTraffic_Controller();
+                }
+            }
+        });
+        barraOpciones.btnConsultas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(barraTablas.btnActual == null){
+                    JOptionPane.showMessageDialog(ref, "Seleccione una opcion del panel lateral", "Consultas", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(ventanaConsultas != null) ventanaConsultas.dispose();
+
+                if(barraTablas.btnActual == barraTablas.btnModels){
+                    ventanaConsultas = new ConsultasModel();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplanes){
+                    ventanaConsultas = new ConsultasAirplane();
+                }else if(barraTablas.btnActual == barraTablas.btnEmployees){
+                    ventanaConsultas = new ConsultasEmployee();
+                }else if(barraTablas.btnActual == barraTablas.btnExpertises){
+                    ventanaConsultas = new ConsultasExpertises();
+                }else if(barraTablas.btnActual == barraTablas.btnAirplaneTests){
+                    ventanaConsultas = new ConsultasAirplane_Technician_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnAviationTests){
+                    ventanaConsultas = new ConsultasAviation_Test();
+                }else if(barraTablas.btnActual == barraTablas.btnTrafficController){
+                    ventanaConsultas = new ConsultasTraffic_Controller();
                 }
             }
         });

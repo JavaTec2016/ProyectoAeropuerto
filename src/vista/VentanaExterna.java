@@ -45,6 +45,7 @@ public class VentanaExterna extends JFrame {
     protected String[] tipos;
     protected int[] lgs;
     protected boolean[] nnl;
+    protected String[] props;
     protected JTable ress;
     protected DefaultTableModel model;
     protected JScrollPane scroller;
@@ -169,10 +170,11 @@ public class VentanaExterna extends JFrame {
         ras.ch = celh;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        model = new DefaultTableModel(null, cps);
+        model = new DefaultTableModel(null, props);
         ress = new JTable(model);
         scroller = new JScrollPane(ress);
 
+        Wrap wScroll = new Wrap(scroller);
 
 
         panel = new Panelo();
@@ -192,6 +194,37 @@ public class VentanaExterna extends JFrame {
         System.out.println("obtenidos " + cps.length + " componentes");
         inputs = new JComponent[cps.length];
 
+        Wrap wPanel = new Wrap(panel);
+        Wrap wLblAgregar = new Wrap(lblPanel);
+
+        btnCancelar = new JButton("CANCELAR");
+        btnLimpiar = new JButton("LIMPIAR");
+        btnValidar = new JButton(btnAccion);
+
+        ras.agregarRelativo(wPanel, panel.x, panel.y, panel.w, panel.h);
+        int restheight = h-panelHeight;
+        Wrap wBtnLimpiar = ras.encuadrarRelativo(btnLimpiar, 36+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.2), 10,2);
+
+        Wrap wBtnValidar = ras.encuadrarRelativo(btnValidar, 36+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.45), 12, 2);
+        Wrap wBtnCancelar = ras.encuadrarRelativo(btnCancelar, 36+lblMaxWidth+19, (int)(panelHeight/celh + restheight/celh*0.7), 12,2);
+
+
+        wBtnValidar.centerOffset(1,1);
+        wBtnCancelar.centerOffset(1,1);
+        wBtnLimpiar.centerOffset(1,1);
+
+        panel.ras.agregarRelativo(wLblAgregar, panel.w/2, panel.h/2, panel.w, panel.h);
+        lblPanel.setVerticalAlignment(SwingConstants.CENTER);
+        lblPanel.setHorizontalAlignment(SwingConstants.CENTER);
+        wLblAgregar.centerOffset(1,1);
+        wLblAgregar.posicionarRelativo(panel);
+        panel.salida.add(wLblAgregar);
+
+        salida.add(wPanel);
+        salida.add(wBtnValidar);
+        salida.add(wBtnCancelar);
+        salida.add(wBtnLimpiar);
+
         JComboBox<String> opciones = new JComboBox<String>();
         for(String lbl : lbls){
             opciones.addItem(lbl);
@@ -206,19 +239,29 @@ public class VentanaExterna extends JFrame {
 
         int resheight = h/celh-((panel.h/celh)+1);
         //Wrap wScroll = new Wrap(scroller);
-        ras.encuadrarRelativo(scroller, (int)(w*0.4/celw), resheight/2, (int)(w*0.6/celw), (int)(resheight*0.8/celh));
-        salida.get(salida.size()-1).centerOffset(1,1);
+        scroller.setViewportView(ress);
+        ras.encuadrarRelativo(scroller, 4, (int)(h/celh*0.33), w/celw*0.7, h/celh*0.6);
+        //salida.get(salida.size()-1).centerOffset(1,1);
+
+        int idx = opciones.getSelectedIndex();
+        inputs[1] = identificarComponente(cps[idx]);
+        Wrap wInput = new Wrap(inputs[1]);
+        salida.add(ras.encuadrarRelativo(inputs[1], 4+opciones.getWidth()/celw+1, (panel.h/celh)+2, lblMaxWidth, 2));
 
         opciones.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int idx = opciones.getSelectedIndex();
-                inputs[1] = identificarComponente(cps[idx]);
-                if(inputs[1] instanceof JComboBox<?>){
-                    ((JComboBox)inputs[1]).addItem("Technician");
-                    ((JComboBox)inputs[1]).addItem("Traffic_Controller");
-                }
-                //if(cps[idx].equalsIgnoreCase("jtextfield")) inputs[0] = new JTextField(10);
+                //int idx = opciones.getSelectedIndex();
+                //inputs[1] = identificarComponente(cps[idx]);
+                //if(inputs[1] instanceof JComboBox<?>){
+                //    ((JComboBox)inputs[1]).addItem("Technician");
+                //    ((JComboBox)inputs[1]).addItem("Traffic_Controller");
+                //}
+                //wInput.componente = inputs[1];
+                //ras.prepararRelativo(wInput, 4+opciones.getWidth()/celw, (panel.h/celh)+2, lblMaxWidth, 2);
+                //System.out.println("dale");
+                //RasLayout.refrescar(salida, ras);
+                //ras.actualizarRelativo(wInput);
             }
         });
         inputs[0] = opciones;
@@ -226,8 +269,19 @@ public class VentanaExterna extends JFrame {
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String campo = extraerInput(opciones);
+
+                String campo = props[opciones.getSelectedIndex()];
+                System.out.println(((JTextField)inputs[1]).getText());
                 String valor = extraerInput(inputs[1]);
+                if(valor.isEmpty()){
+                    ArrayList<Registrable> res = dao.consultarUniversal(objetivo);
+
+                    while (model.getRowCount() > 0) model.removeRow(0);
+                    for (Registrable r : res) {
+                        model.addRow(r.obtenerValores());
+                    }
+                    return;
+                }
                 if(tipos[opciones.getSelectedIndex()].equalsIgnoreCase("char") || tipos[opciones.getSelectedIndex()].equalsIgnoreCase("varchar")){
                     if(!tipos[opciones.getSelectedIndex()].equalsIgnoreCase("null"))  valor = "'"+valor+"'";
                 }
