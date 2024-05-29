@@ -1,6 +1,7 @@
 package conexionBD;
 import java.sql.*;
 
+
 public class ConexionBD {
     private Connection conexion;
     private Statement ste;
@@ -62,11 +63,10 @@ public class ConexionBD {
             rs = ste.executeQuery(instruccionSQL);
 
         } catch (SQLException e) {
-            System.out.println("Error en la instruccion");
+            System.out.println("Error en la instruccion: " + e.getErrorCode());
             e.printStackTrace();
+
         }
-
-
         return rs;
     }
     //singleton

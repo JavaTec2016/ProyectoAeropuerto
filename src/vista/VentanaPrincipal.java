@@ -14,6 +14,23 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import static controlador.DAO.d;
+class HiloConsulta extends Thread{
+    VentanaPrincipal v;
+
+    public HiloConsulta(VentanaPrincipal vn){
+        v = vn;
+    }
+    @Override
+    public void run() {
+        if(v.barraTablas.btnActual == null){
+            JOptionPane.showMessageDialog(v, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Registrable> rs = d.consultarUniversal(v.barraTablas.obtenerTabla());
+        System.out.println("Se consulto la tabla " + v.barraTablas.obtenerTabla() + " con " + rs.size() + " registros.");
+        v.panelTabla.agregarRegistros(rs);
+    }
+}
 
 public class VentanaPrincipal extends JFrame {
     RasLayout ras;
@@ -259,36 +276,10 @@ public class VentanaPrincipal extends JFrame {
             }
         });
     }
-    public void copiarInternal(Ventana in, Ventana n){
-        Component[] cs = n.getComponents();
-        in.removeAll();
-        in.revalidate();
-        in.repaint();
-        in.w = n.w;
-        in.h = n.h;
-        in.ras = n.ras;
-        in.salida = n.salida;
 
-        in.setBounds(n.getX(), n.getY(), n.getWidth(), n.getHeight());
-        for (Component c : cs) {
-            in.add(c);
-        }
-        for(ComponentListener ca : in.getComponentListeners()){
-            in.removeComponentListener(ca);
-        }
-        for(ComponentListener ca : n.getComponentListeners()){
-            in.addComponentListener(ca);
-        }
-
-    }
     public void setRegistros(){
-        if(barraTablas.btnActual == null){
-            JOptionPane.showMessageDialog(this, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        ArrayList<Registrable> rs = d.consultarUniversal(barraTablas.obtenerTabla());
-        System.out.println("Se consulto la tabla " + barraTablas.obtenerTabla() + " con " + rs.size() + " registros.");
-        panelTabla.agregarRegistros(rs);
+        HiloConsulta cons = new HiloConsulta(this);
+        cons.start();
     }
     public boolean identificarError(int err){
 

@@ -39,11 +39,5 @@ public class CambiosExpertises extends VentanaExterna {
         lblVacios.setVerticalAlignment(SwingConstants.CENTER);
         lblVacios.setHorizontalAlignment(SwingConstants.CENTER);
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                RasLayout.refrescar(salida, ras);
-            }
-        });
     }
 }
