@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.HiloConsulta;
 import modelo.Registrable;
 import vista.Altas.*;
 import vista.Bajas.*;
@@ -14,32 +15,16 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import static controlador.DAO.d;
-class HiloConsulta extends Thread{
-    VentanaPrincipal v;
 
-    public HiloConsulta(VentanaPrincipal vn){
-        v = vn;
-    }
-    @Override
-    public void run() {
-        if(v.barraTablas.btnActual == null){
-            JOptionPane.showMessageDialog(v, "Seleccione una tabla a consultar", "Consulta indefinida", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        ArrayList<Registrable> rs = d.consultarUniversal(v.barraTablas.obtenerTabla());
-        System.out.println("Se consulto la tabla " + v.barraTablas.obtenerTabla() + " con " + rs.size() + " registros.");
-        v.panelTabla.agregarRegistros(rs);
-    }
-}
 
 public class VentanaPrincipal extends JFrame {
     RasLayout ras;
     ArrayList<Wrap> partes;
     VentanaLogin vl;
     JPanel panelFondo;
-    PanelLateral barraTablas;
+    public PanelLateral barraTablas;
     PanelSuperior barraOpciones;
-    PanelTabla panelTabla;
+    public PanelTabla panelTabla;
 
     JDesktopPane desk;
 

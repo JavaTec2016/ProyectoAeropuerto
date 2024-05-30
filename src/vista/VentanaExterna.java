@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.ConsultaAvanzada;
 import controlador.DAO;
 import modelo.ModeloBD;
 import modelo.Registrable;
@@ -15,43 +16,7 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
 import static controlador.DAO.d;
-class ConsultaAvanzada extends Thread {
-    VentanaExterna v;
-    public ConsultaAvanzada(VentanaExterna vn){
-        v = vn;
-    }
 
-    @Override
-    public void run() {
-
-        String campo = v.props[v.opciones.getSelectedIndex()];
-
-        String valor = v.extraerInput(v.inputs[1]);
-        System.out.println(valor);
-        if(valor.isEmpty()){
-            ArrayList<Registrable> res = v.dao.consultarUniversal(v.objetivo);
-
-            while (v.model.getRowCount() > 0) v.model.removeRow(0);
-            for (Registrable r : res) {
-                v.model.addRow(r.obtenerValores());
-            }
-            return;
-        }
-        if(v.tipos[v.opciones.getSelectedIndex()].equalsIgnoreCase("char") || v.tipos[v.opciones.getSelectedIndex()].equalsIgnoreCase("varchar")){
-            if(!v.tipos[v.opciones.getSelectedIndex()].equalsIgnoreCase("null"))  valor = "'"+valor+"'";
-        }
-        if(v.validarInput(valor, v.tipos[v.opciones.getSelectedIndex()], v.nnl[v.opciones.getSelectedIndex()], v.lgs[v.opciones.getSelectedIndex()], v.lbls[v.opciones.getSelectedIndex()], true) != 0) return;
-        ArrayList<Registrable> res = v.dao.consultarUniversal(v.objetivo, campo+"="+valor);
-        while (v.model.getRowCount() > 0) v.model.removeRow(0);
-        if(res == null){
-            JOptionPane.showMessageDialog(v, "Sin resultados", "Consulta vacia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        for (Registrable r : res) {
-            v.model.addRow(r.obtenerValores());
-        }
-    }
-}
 public class VentanaExterna extends JFrame {
     public RasLayout ras;
     public ArrayList<Wrap> salida;
@@ -73,21 +38,23 @@ public class VentanaExterna extends JFrame {
     public VentanaExterna ref = this;
     protected Panelo panel;
     protected String btnAccion = "-";
-    protected String objetivo;
+    public String objetivo;
 
-    protected String[] lbls;
+    public String[] lbls;
     protected String[] cps;
 
-    protected String[] tipos;
-    protected int[] lgs;
-    protected boolean[] nnl;
-    protected String[] props;
+    public String[] tipos;
+    public int[] lgs;
+    public boolean[] nnl;
+    public String[] props;
     protected JTable ress;
-    protected DefaultTableModel model;
+    public DefaultTableModel model;
     protected JScrollPane scroller;
     protected Wrap wInput;
     protected int idx;
-    protected JComboBox<String> opciones;
+    public JComboBox<String> opciones;
+
+    public boolean filtroCambio(){return true;}
     public void autoGenerar(String objetivo, String label, int panelHeight, int separation, int yp, int lblMaxWidth){
         this.objetivo = objetivo;
         ras = new RasLayout(this, title, w, h);
@@ -384,6 +351,7 @@ public class VentanaExterna extends JFrame {
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //if(!filtroCambio()) return;
                 int j = 0;
                 //prepara los argumentos para el objeto
                 Object[] inps = new Object[inputs.length];

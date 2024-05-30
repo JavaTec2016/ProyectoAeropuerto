@@ -206,7 +206,8 @@ public class DAO {
 
         } catch (SQLException e) {
             System.out.println("Error en consulta SQL");
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            return null;
         } catch (ClassNotFoundException e) {
             System.out.println("modelo."+tabla+" no existe");
             throw new RuntimeException(e);
